@@ -22,6 +22,8 @@ public:
 
     int get_temperature(void);
     int get_temperature(int addr);
+    int get_humidity(void);
+    int get_humidity(int addr);
 };
 
 #endif

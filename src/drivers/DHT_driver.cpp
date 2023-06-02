@@ -16,3 +16,8 @@ int DHT_driver::get_humidity()
 {
     return dht.readHumidity();
 }
+
+int DHT_driver::get_humidity(int addr)
+{
+    return dht.readHumidity();
+}
