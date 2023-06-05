@@ -1,8 +1,8 @@
 #ifndef DS18B20_DRIVER_H
 #define DS18B20_DRIVER_H
 
+#include "avr/io.h"
 #include "DallasTemperature.h"
-#include "Arduino.h"
 
 class DS18B20_driver
 {
