@@ -8,9 +8,18 @@ int DHT_driver::get_temperature()
 
 int DHT_driver::get_temperature(int addr)
 {
-    return dht.readTemperature();
+    return get_temperature();
 }
 
+int DHT_driver::get_temperature_middle()
+{
+    return get_temperature();
+}
+
+int DHT_driver::get_temperature_delta()
+{
+    return get_temperature();
+}
 
 int DHT_driver::get_humidity()
 {

@@ -13,6 +13,7 @@ void setup() {
 }
 
 void loop() {
+  DHT_11.get_temperature();
   // put your main code here, to run repeatedly:
 }
 
