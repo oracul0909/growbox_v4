@@ -15,10 +15,10 @@ int DS18B20_driver::get_temperature()
     return get_temperature(0);
 }
 
-int DS18B20_driver::get_temperature(int addr)
+int DS18B20_driver::get_temperature(int index)
 {
     ds18b20.requestTemperatures();
-    return ds18b20.getTempCByIndex(addr);
+    return ds18b20.getTempCByIndex(index);
 }
 
 typedef struct

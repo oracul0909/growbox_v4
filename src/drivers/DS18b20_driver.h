@@ -27,12 +27,23 @@ public:
         }
     }
 
+    //Возвращает температуру датчика с 0 индексом
     int get_temperature(void);
-    int get_temperature(int addr);
+
+    //Возвращает температуру датчика по индексу
+    int get_temperature(int index);
+
+    //Возвращает среднюю температуру всех датчиков в группе
     int get_temperature_middle();
+
+    //Возвращает разницу между максимальной и минимальной температурой всех датчиков в группе
     int get_temperature_delta();
+
+    //Возвращает 0 (DS18b20 не измеряет влажность)
     int get_humidity(void);
-    int get_humidity(int addr);
+
+    //Возвращает 0 (DS18b20 не измеряет влажность)
+    int get_humidity(int index);
 };
 
 #endif
