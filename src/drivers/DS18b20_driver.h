@@ -1,7 +1,6 @@
 #ifndef DS18B20_DRIVER_H
 #define DS18B20_DRIVER_H
 
-#include "avr/io.h"
 #include "DallasTemperature.h"
 
 class DS18B20_driver
@@ -28,22 +27,22 @@ public:
     }
 
     //Возвращает температуру датчика с 0 индексом
-    int get_temperature(void);
+    int8_t get_temperature(void);
 
     //Возвращает температуру датчика по индексу
-    int get_temperature(int index);
+    int8_t get_temperature(int index);
 
     //Возвращает среднюю температуру всех датчиков в группе
-    int get_temperature_middle();
+    int8_t get_temperature_middle();
 
     //Возвращает разницу между максимальной и минимальной температурой всех датчиков в группе
-    int get_temperature_delta();
+    int8_t get_temperature_delta();
 
     //Возвращает 0 (DS18b20 не измеряет влажность)
-    int get_humidity(void);
+    uint8_t get_humidity(void);
 
     //Возвращает 0 (DS18b20 не измеряет влажность)
-    int get_humidity(int index);
+    uint8_t get_humidity(int index);
 };
 
 #endif

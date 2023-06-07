@@ -10,25 +10,18 @@ void printAddress(DeviceAddress deviceAddress)
     }
 }
 
-int DS18B20_driver::get_temperature()
+int8_t DS18B20_driver::get_temperature()
 {
     return get_temperature(0);
 }
 
-int DS18B20_driver::get_temperature(int index)
+int8_t DS18B20_driver::get_temperature(int index)
 {
     ds18b20.requestTemperatures();
     return ds18b20.getTempCByIndex(index);
 }
 
-typedef struct
-{
-    int middle_temp;
-    uint8_t count_success_get;
-
-} t_return_temp;
-
-int DS18B20_driver::get_temperature_middle()
+int8_t DS18B20_driver::get_temperature_middle()
 {
     int sum = 0;
     uint8_t count_success_get = 0;
@@ -51,11 +44,11 @@ int DS18B20_driver::get_temperature_middle()
     }
     else
     {
-        return (sum / count_sensors);
+        return int8_t(sum / count_sensors);
     }
 }
 
-int DS18B20_driver::get_temperature_delta()
+int8_t DS18B20_driver::get_temperature_delta()
 {
     int val_temp = 0;
     int min_temp = 0;
@@ -88,16 +81,16 @@ int DS18B20_driver::get_temperature_delta()
     }
     else
     {
-        return (max_temp - min_temp);
+        return int8_t(max_temp - min_temp);
     }
 }
 
-int DS18B20_driver::get_humidity()
+uint8_t DS18B20_driver::get_humidity()
 {
     return 0;
 }
 
-int DS18B20_driver::get_humidity(int addr)
+uint8_t DS18B20_driver::get_humidity(int addr)
 {
     return 0;
 }

@@ -1,18 +1,18 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 struct Data_struct
 {
-    int temp_inside;     // 24 температура внутри
+    int8_t temp_inside;     // 24 температура внутри
     uint8_t hum_inside;  // 25 влажность внутри
-    int temp_outside;    // 26 температура снаружи
+    int8_t temp_outside;    // 26 температура снаружи
     uint8_t hum_outside; // 27 влажность снаружи
     int light_intencity; // 28 освещенность
     uint8_t ground_hum;  // 29 влажность почвы
     bool lock_status;    //   состояние замка блокировки
-    int nextion_time;    //   cуммарное время в минутах(для работы)
+    int time;    //   cуммарное время в минутах(для работы)
     bool time_updated;   // 18 флаг, чт0 дату/время поменяли
     uint8_t time_minute; // 20 минуты
     uint8_t time_hour;   // 19 часы
@@ -27,14 +27,16 @@ struct Settings_struct
     int fito_forcibly_stop;     // 12 принудительная остановка фито лампы
     int white_forcibly_stop;    // 15 принудительная остановка белой лампы
     int only_one_light;         // 13 выключение белой лампы при работе фито
-    int temp_inside_day;        // 8  минимальный уровень температуры
-    int temp_inside_night;      // 9  максимальный уровень температуры
-    int hum_inside_day;         // 3  минимальный уровень влажности
-    int hum_inside_night;       // 4  максимальный уровень влажности
+    int temp_inside_day;        //* 8  минимальный уровень температуры
+    int temp_inside_night;      //* 9  максимальный уровень температуры
+    int temp_reqired;           //*
+    int hum_inside_day;         //* 3  минимальный уровень влажности
+    int hum_inside_night;       //* 4  максимальный уровень влажности
+    int hum_reqired;            //*
     int ground_hum_min;         // 6  минимальный уровень влажности почвы
     int ground_hum_max;         // 5  максимальный уровень влажности почвы
-    int day_time_start;         // 1  время начала дневной фазы
-    int night_time_start;       // 2  время начала ночной фазы
+    int time_day;               // 1  время начала дневной фазы
+    int time_night;             // 2  время начала ночной фазы
     int fito_light_time_start;  // 10 время начала работы фито лампы
     int fito_light_time_stop;   // 11 время окончания работы фито лампы
     int light_intencity_border; // 14 световой порог включения белой лампы

@@ -1,7 +1,6 @@
 #ifndef DHT_DRIVER_H
 #define DHT_DRIVER_H
 
-#include "avr/io.h"
 #include <Adafruit_Sensor.h>
 #include "DHT.h"
 
@@ -20,12 +19,12 @@ public:
         dht.begin();
     }
 
-    int get_temperature(void);
-    int get_temperature(int addr);
-    int get_temperature_middle();
-    int get_temperature_delta();
-    int get_humidity(void);
-    int get_humidity(int addr);
+    int8_t get_temperature(void);
+    int8_t get_temperature(int addr);
+    int8_t get_temperature_middle();
+    int8_t get_temperature_delta();
+    uint8_t get_humidity(void);
+    uint8_t get_humidity(int addr);
 };
 
 #endif
