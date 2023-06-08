@@ -23,9 +23,9 @@ struct Data_struct
 
 struct Settings_struct
 {
-    int water_forcibly_stop;    // 7  принудительная остановка полива
-    int fito_forcibly_stop;     // 12 принудительная остановка фито лампы
-    int white_forcibly_stop;    // 15 принудительная остановка белой лампы
+    int water_work_mode;    // 7  принудительная остановка полива
+    int fito_work_mode;     // 12 принудительная остановка фито лампы
+    int white_work_mode;    // 15 принудительная остановка белой лампы
     int only_one_light;         // 13 выключение белой лампы при работе фито
     int temp_inside_day;        //* 8  минимальный уровень температуры
     int temp_inside_night;      //* 9  максимальный уровень температуры
@@ -37,9 +37,12 @@ struct Settings_struct
     int ground_hum_max;         // 5  максимальный уровень влажности почвы
     int time_day;               // 1  время начала дневной фазы
     int time_night;             // 2  время начала ночной фазы
-    int fito_light_time_start;  // 10 время начала работы фито лампы
-    int fito_light_time_stop;   // 11 время окончания работы фито лампы
+    int fito_time_start;  // 10 время начала работы фито лампы
+    int fito_time_stop;   // 11 время окончания работы фито лампы
     int light_intencity_border; // 14 световой порог включения белой лампы
+    int white_reqired;
+    int fito_reqired;
+
 };                              // Settings
 
 struct Device_status_struct
