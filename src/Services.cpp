@@ -1,5 +1,6 @@
 #include "Services.h"
 #include "Data.h"
+#include "drivers/Section.h"
 #include "Arduino_FreeRTOS.h"
 
 extern Data_struct Data;
@@ -19,12 +20,31 @@ void service_day_phase()
     }
 }
 
-void service_climat_control()
+void service_workers_mode()
 {
-    // code
+    //code
 }
 
+void service_climat_control()
+{
+    //code
+}
 
+void service_section_control()
+{
+    Section_1.white_control(0);
+    Section_2.white_control(0);
+    Section_3.white_control(0);
+    Section_4.white_control(0);
+    Section_1.fito_control(0);
+    Section_2.fito_control(0);
+    Section_3.fito_control(0);
+    Section_4.fito_control(0);
+    Section_1.pump_control(0, 0, 0);
+    Section_2.pump_control(0, 0, 0);
+    Section_3.pump_control(0, 0, 0);
+    Section_4.pump_control(0, 0, 0);
+}
 
 void tasks_init()
 {
@@ -39,10 +59,8 @@ void Task_1(void *pvParameters)
 
     for (;;)
     {
-        digitalWrite(LED_BUILTIN, HIGH);
+        service_section_control();
         vTaskDelay(1000 / portTICK_PERIOD_MS); // wait for one second
-        digitalWrite(LED_BUILTIN, LOW);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
