@@ -12,6 +12,7 @@ Section Section_general(0, 0, 0);
 
 void Task_1(void *pvParameters);
 void Task_2(void *pvParameters);
+void Task_3(void *pvParameters);
 
 void tasks_init();
 
