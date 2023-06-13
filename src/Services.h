@@ -2,13 +2,13 @@
 #define SERVICES_H
 
 #include "Data.h"
-#include "drivers/Section.h"
+#include "Section.h"
 
-Section Section_1(0, 0, 0);
-Section Section_2(0, 0, 0);
-Section Section_3(0, 0, 0);
-Section Section_4(0, 0, 0);
 Section Section_general(0, 0, 0);
+Section Section_1(&Section_general, 0, 0, 0);
+Section Section_2(&Section_general, 0, 0, 0);
+Section Section_3(&Section_general, 0, 0, 0);
+Section Section_4(&Section_general, 0, 0, 0);
 
 void Task_1(void *pvParameters);
 void Task_2(void *pvParameters);

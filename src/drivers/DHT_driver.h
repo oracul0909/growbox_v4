@@ -19,11 +19,22 @@ public:
         dht.begin();
     }
 
+    //Возвращает значение температуры датчика DHT
     int8_t get_temperature(void);
+
+    //Возвращает значение температуры датчика DHT (адрес значения не имеет)
     int8_t get_temperature(int addr);
+
+    //Возвращает значение температуры датчика DHT
     int8_t get_temperature_middle();
+
+    //Возвращает значение температуры датчика DHT
     int8_t get_temperature_delta();
+
+    //Возвращает значение влажности датчика DHT
     uint8_t get_humidity(void);
+
+    //Возвращает значение влажности датчика DHT (адрес значения не имеет)
     uint8_t get_humidity(int addr);
 };
 

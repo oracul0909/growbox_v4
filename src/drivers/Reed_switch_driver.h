@@ -5,16 +5,16 @@
 class Reed_switch_driver
 {
 private:
-    uint8_t pin;
+    int pin;
 
 public:
-    Reed_switch_driver(uint8_t _pin)
+    Reed_switch_driver(int _pin)
     {
         pin = _pin;
         pinMode(_pin, INPUT);
     }
 
-    bool get_state(int pin);
+    bool get_state();
 };
 
 #endif
