@@ -1,28 +1,34 @@
 #include "Services.h"
-#include "Data.h"
-#include "Section.h"
 #include "Arduino_FreeRTOS.h"
 
-extern Data_struct Data;
-extern Settings_struct Settings;
+extern uint16_t data[array_length];
 
 void service_day_phase()
 {
-    if (Data.time >= Settings.time_day && Data.time < Settings.time_night)
+    if (data[time] >= data[time_day] && data[time] < data[time_night])
     {
-        Settings.temp_reqired = Settings.temp_inside_day;
-        Settings.hum_reqired = Settings.hum_inside_day;
+        data[temp_required] = data[temp_inside_day];
+        data[hum_required] = data[hum_inside_day];
     }
     else
     {
-        Settings.temp_reqired = Settings.temp_inside_night;
-        Settings.hum_reqired = Settings.hum_inside_night;
+        data[temp_required] = data[temp_inside_night];
+        data[hum_required] = data[hum_inside_night];
     }
 }
 
 void service_sensors_run()
 {
-    //code
+    data[temp_inside] = DS.get_temperature_middle();
+    data[temp_outside] = DHT_outside.get_temperature();
+    data[hum_inside] = DHT_inside.get_humidity();
+    data[hum_outside] = DHT_outside.get_humidity();
+    data[ground_hum] = CSMS.get_moisture_middle(5);
+    data[temp_inside] = 0;
+    data[temp_inside] = 0;
+    data[temp_inside] = 0;
+    data[temp_inside] = 0;
+    data[temp_inside] = 0;
 }
 
 void service_workers_mode()

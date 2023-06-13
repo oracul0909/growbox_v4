@@ -2,9 +2,17 @@
 #define SERVICES_H
 
 #include "Data.h"
+#include "drivers/CSMS_driver.h"
+#include "drivers/DHT_driver.h"
+#include "drivers/DS18b20_driver.h"
 #include "Section.h"
 
-Section Section_general(0, 0, 0);
+CSMS_driver CSMS(0);
+DHT_driver DHT_inside(0);
+DHT_driver DHT_outside(0);
+DS18B20_driver DS(0);
+
+Section Section_general;
 Section Section_1(&Section_general, 0, 0, 0);
 Section Section_2(&Section_general, 0, 0, 0);
 Section Section_3(&Section_general, 0, 0, 0);

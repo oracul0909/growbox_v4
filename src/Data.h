@@ -3,43 +3,88 @@
 
 #include <Arduino.h>
 
+enum 
+{
+    //температура воздуха
+    temp_inside,
+    temp_inside_day,
+    temp_inside_night,
+    temp_required,
+    temp_outside,
+
+    //влажность воздуха
+    hum_inside,
+    hum_inside_day,
+    hum_inside_night,
+    hum_required,
+    hum_outside,
+
+    //влажность почвы
+    ground_hum_min,
+    ground_hum_max,
+    ground_hum,
+
+    //освещенность
+    section_1_white_bright,
+    section_1_fito_bright,
+    section_2_white_bright,
+    section_2_fito_bright,
+    section_3_white_bright,
+    section_3_fito_bright,
+    section_4_white_bright,
+    section_4_fito_bright,
+
+    //время
+    time,
+    time_day,
+    time_night,
+
+    //длина массива
+    array_length
+};
+
+uint16_t data[array_length];
+
+
+/*
 struct Data_struct
 {
-    int8_t temp_inside;     // 24 температура внутри
-    uint8_t hum_inside;  // 25 влажность внутри
-    int8_t temp_outside;    // 26 температура снаружи
-    uint8_t hum_outside; // 27 влажность снаружи
-    int light_intencity; // 28 освещенность
-    uint8_t ground_hum;  // 29 влажность почвы
-    bool lock_status;    //   состояние замка блокировки
-    int time;    //   cуммарное время в минутах(для работы)
-    bool time_updated;   // 18 флаг, чт0 дату/время поменяли
-    uint8_t time_minute; // 20 минуты
-    uint8_t time_hour;   // 19 часы
-    uint8_t time_date;   // 21 число
-    uint8_t time_month;  // 22 месяц
-    int time_year;       // 23 год
-};                       // Data
+    int temp_inside;       //температура внутри
+    int hum_inside;        //влажность внутри
+    int temp_outside;      //температура снаружи
+    int hum_outside;       //влажность снаружи
+    int light_intencity;   //освещенность
+    int ground_hum;        //влажность почвы
+    int lock_status;       //состояние замка блокировки
+    int water_tank_status;
+    int time;              //cуммарное время в минутах(для работы)
+    int time_updated;      //флаг, чт0 дату/время поменяли
+    int time_minute;       //минуты
+    int time_hour;         //часы
+    int time_date;         //число
+    int time_month;        //месяц
+    int time_year;         //год
+};  // Data
 
 struct Settings_struct
 {
-    int water_work_mode;    // 7  принудительная остановка полива
-    int fito_work_mode;     // 12 принудительная остановка фито лампы
-    int white_work_mode;    // 15 принудительная остановка белой лампы
-    int only_one_light;         // 13 выключение белой лампы при работе фито
-    int temp_inside_day;        //* 8  минимальный уровень температуры
-    int temp_inside_night;      //* 9  максимальный уровень температуры
-    int temp_reqired;           //*
-    int hum_inside_day;         //* 3  минимальный уровень влажности
-    int hum_inside_night;       //* 4  максимальный уровень влажности
-    int hum_reqired;            //*
-    int ground_hum_min;         // 6  минимальный уровень влажности почвы
-    int ground_hum_max;         // 5  максимальный уровень влажности почвы
-    int time_day;               // 1  время начала дневной фазы
-    int time_night;             // 2  время начала ночной фазы
-    int fito_time_start;  // 10 время начала работы фито лампы
-    int fito_time_stop;   // 11 время окончания работы фито лампы
-    int light_intencity_border; // 14 световой порог включения белой лампы
+    int water_work_mode;   //принудительная остановка полива
+    int fito_work_mode;    //принудительная остановка фито лампы
+    int white_work_mode;   //принудительная остановка белой лампы
+    int only_one_light;    //выключение белой лампы при работе фито
+    int temp_inside_day;   //минимальный уровень температуры
+    int temp_inside_night; //максимальный уровень температуры
+    int temp_reqired;      //
+    int hum_inside_day;    //минимальный уровень влажности
+    int hum_inside_night;  //максимальный уровень влажности
+    int hum_reqired;       //
+    int ground_hum_min;    // минимальный уровень влажности почвы
+    int ground_hum_max;    //максимальный уровень влажности почвы
+    int time_day;          //время начала дневной фазы
+    int time_night;        //время начала ночной фазы
+    int fito_time_start;   //время начала работы фито лампы
+    int fito_time_stop;    //время окончания работы фито лампы
+    int light_intencity_border; //световой порог включения белой лампы
     int white_reqired;
     int fito_reqired;
 
@@ -52,7 +97,8 @@ struct Device_status_struct
     int white_light_status;  //   состояние работы белого света
     int fan_inside_status;   //   состояние работы внутреннего вентилятора
     int fan_outside_status;  //   состояние работы внешнего вентилятора
-    int heater_lamp_status;  //   состояние работы лампы обогрева
+    int cooler_status;
+    int heater_status;       //   состояние работы лампы обогрева
     int overflow_led_status; //   состояние датчика перелива
     int wi_fi_status;        // 16 состояние wi-fi
     int bluetooth_status;    // 17 состояние bluetooth
@@ -64,5 +110,5 @@ struct Main_data_struct
     Settings_struct Settings_2;
     Device_status_struct Device_status_2;
 };
-
+*/
 #endif
