@@ -1,10 +1,5 @@
 #include "Water_tank.h"
 
-extern uint16_t data_array[last_val_1];
-
-//#define Extern_data(x) data_array[x]
-
-
 //переделать потом на побитовую матрицу состояний
 int Water_tank::get_state()
 {
@@ -14,7 +9,6 @@ int Water_tank::get_state()
         {
             if(Normal_switch.get_state() == true)
             {
-                data_array[data_2];
                 return 3;
             }
             else

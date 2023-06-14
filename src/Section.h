@@ -16,6 +16,8 @@ private:
     Section *General;
 
 public:
+    Section(){}
+
     Section(Section *_General, int _white_pin, int _fito_pin, int _pump_pin)
     {
         General = _General;
@@ -31,6 +33,8 @@ public:
     void pump_control(int work, int pause, int time);
 
     void section_control();
+
+    void get_general();
 };
 
 #endif

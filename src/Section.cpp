@@ -37,3 +37,8 @@ void Section::pump_control(int work, int pause, int time)
         Pump.run(0, pause, time);
     }
 }
+
+void Section::get_general()
+{
+    
+}
