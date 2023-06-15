@@ -20,11 +20,17 @@ enum
     hum_outside,
 
     //влажность почвы
-    ground_hum_min,
-    ground_hum_max,
     ground_hum,
+    ground_hum_min_1,
+    ground_hum_min_2,
+    ground_hum_min_3,
+    ground_hum_min_4,
+    ground_hum_max_1,
+    ground_hum_max_2,
+    ground_hum_max_3,
+    ground_hum_max_4,
 
-    //освещенность
+    //интенсивносить освещения
     white_bright_1,
     white_bright_2,
     white_bright_3,
@@ -43,7 +49,7 @@ enum
     pump_3_status,
     pump_4_status,
     
-    //время
+    //время временные установки
     time,
     time_day,
     time_night,
@@ -55,24 +61,24 @@ enum
     fito_stop_2,
     fito_stop_3,
     fito_stop_4,
-    pump_1_work,
-    pump_2_work,
-    pump_3_work,
-    pump_4_work,
-    pump_1_pause,
-    pump_2_pause,
-    pump_3_pause,
-    pump_4_pause,
+    pump_work_1,
+    pump_work_2,
+    pump_work_3,
+    pump_work_4,
+    pump_pause_1,
+    pump_pause_2,
+    pump_pause_3,
+    pump_pause_4,
     fito_start_general,
     fito_stop_general,
     pump_work_general,
-    pump_stop_general,
+    pump_pause_general,
 
     //режим работы(work_mode)
     //0 - принудительно остановлен
-    //1 - выключен
-    //2 - включен (автоматический алгоритм)
-    //3 - включен (ручной алгоритм)
+    //1 - включен (индивидуальная схема работы)
+    //2 - включен (групповая схема работы)
+    //3 - включен постоянно / работа от датчика влажности
     white_wm_1,
     white_wm_2,
     white_wm_3,
@@ -85,9 +91,6 @@ enum
     pump_wm_2,
     pump_wm_3,
     pump_wm_4,
-    white_wm_general,
-    fito_wm_general,
-    pump_wm_general,
 
 
     //длина массива

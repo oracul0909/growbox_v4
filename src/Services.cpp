@@ -3,7 +3,7 @@
 
 extern uint16_t data[array_length];
 
-//#define data(x) data[x]
+// #define data(x) data[x]
 
 void service_day_phase()
 {
@@ -31,28 +31,58 @@ void service_sensors_run()
 
 void service_workers_mode()
 {
-    //code
+    // code
 }
 
 void service_climat_control()
 {
-    //code
+    // code
 }
 
 void service_section_control()
 {
-    Section_1.white_control(data[white_bright_1]);
-    Section_2.white_control(data[white_bright_2]);
-    Section_3.white_control(data[white_bright_3]);
-    Section_4.white_control(data[white_bright_4]);
-    Section_1.fito_control(data[fito_bright_1]);
-    Section_2.fito_control(data[fito_bright_2]);
-    Section_3.fito_control(data[fito_bright_3]);
-    Section_4.fito_control(data[fito_bright_4]);
-    Section_1.pump_control(data[pump_1_work], data[pump_1_pause], data[time]);
-    Section_2.pump_control(data[pump_2_work], data[pump_2_pause], data[time]);
-    Section_3.pump_control(data[pump_3_work], data[pump_3_pause], data[time]);
-    Section_4.pump_control(data[pump_4_work], data[pump_4_pause], data[time]);
+    Section_general.set_params(white_bright_general,
+                               fito_bright_general,
+                               fito_start_general,
+                               fito_stop_general,
+                               pump_work_general,
+                               pump_pause_general);
+    Section_1.set_params(white_bright_1,
+                         fito_bright_1,
+                         fito_start_1,
+                         fito_stop_1,
+                         pump_work_1,
+                         pump_pause_1);
+    Section_2.set_params(white_bright_2,
+                         fito_bright_2,
+                         fito_start_2,
+                         fito_stop_2,
+                         pump_work_2,
+                         pump_pause_2);
+    Section_3.set_params(white_bright_3,
+                         fito_bright_3,
+                         fito_start_3,
+                         fito_stop_3,
+                         pump_work_3,
+                         pump_pause_3);
+    Section_4.set_params(white_bright_4,
+                         fito_bright_4,
+                         fito_start_4,
+                         fito_stop_4,
+                         pump_work_4,
+                         pump_pause_4);
+    Section_1.white_control(data[white_wm_1]);
+    Section_2.white_control(data[white_wm_2]);
+    Section_3.white_control(data[white_wm_3]);
+    Section_4.white_control(data[white_wm_4]);
+    Section_1.fito_control(data[fito_wm_1]);
+    Section_2.fito_control(data[fito_wm_2]);
+    Section_3.fito_control(data[fito_wm_3]);
+    Section_4.fito_control(data[fito_wm_4]);
+    Section_1.pump_control(data[pump_wm_1], data[ground_hum_min_1], data[ground_hum_max_1]);
+    Section_2.pump_control(data[pump_wm_2], data[ground_hum_min_2], data[ground_hum_max_2]);
+    Section_3.pump_control(data[pump_wm_3], data[ground_hum_min_3], data[ground_hum_max_3]);
+    Section_4.pump_control(data[pump_wm_4], data[ground_hum_min_4], data[ground_hum_max_4]);
 }
 
 void tasks_init()
@@ -73,14 +103,14 @@ void Task_1(void *pvParameters)
     }
 }
 
-void Task_2(void *pvParameters) 
+void Task_2(void *pvParameters)
 {
-  (void) pvParameters;
+    (void)pvParameters;
 
-  for (;;)
-  {
-    int sensorValue = analogRead(A0);
-    Serial.println(sensorValue);
-    vTaskDelay(1);  // one tick delay (15ms) in between reads for stability
-  }
+    for (;;)
+    {
+        int sensorValue = analogRead(A0);
+        Serial.println(sensorValue);
+        vTaskDelay(1); // one tick delay (15ms) in between reads for stability
+    }
 }

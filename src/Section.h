@@ -1,6 +1,7 @@
 #ifndef SECTION_H
 #define SECTION_H
 
+#include "Data.h"
 #include "drivers/LED_driver.h"
 #include "drivers/Worker_driver.h"
 
@@ -16,7 +17,15 @@ private:
     Section *General;
 
 public:
-    Section(){}
+    // общие параметры для групповой работы секций
+    int white_bright;
+    int fito_bright;
+    int fito_start;
+    int fito_stop;
+    int pump_work;
+    int pump_pause;
+
+    Section() {}
 
     Section(Section *_General, int _white_pin, int _fito_pin, int _pump_pin)
     {
@@ -26,15 +35,38 @@ public:
         pump_pin = _pump_pin;
     }
 
-    void white_control(int intencity);
+    /// @brief Контроль работы дневного света
+    /// @param work_mode Режим работы дневного света:
+    ///                  0 - выключено,
+    ///                  1 - индивидуальная работа
+    ///                  2 - групповая работа
+    ///                  3 - включено всегда
+    void white_control(int work_mode);
 
-    void fito_control(int intencity);
+    /// @brief Контроль работы фито света
+    /// @param work_mode Режим работы фито света:
+    ///                  0 - выключено,
+    ///                  1 - индивидуальная работа
+    ///                  2 - групповая работа
+    ///                  3 - включено всегда
+    void fito_control(int work_mode);
 
-    void pump_control(int work, int pause, int time);
+    /// @brief Контроль работы водяного насоса
+    /// @param work_mode Режим работы насоса:
+    ///                  0 - выключено,
+    ///                  1 - индивидуальная работа
+    ///                  2 - работа от датчика влажности почвы
+    ///                  3 - включено всегда
+    /// @param ground_hum_min Минимальный уровень влажности (%)
+    /// @param ground_hum_max Максимальный уровень влажности (%)
+    void pump_control(int work_mode, int ground_hum_min, int ground_hum_max);
 
-    void section_control();
-
-    void get_general();
+    void set_params(int _white_bright,
+                    int _fito_bright,
+                    int _fito_start,
+                    int _fito_stop,
+                    int _pump_work,
+                    int _pump_pause);
 };
 
 #endif

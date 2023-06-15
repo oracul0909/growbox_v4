@@ -1,15 +1,5 @@
 #include "Worker_driver.h"
 
-void Worker_driver::set_work_mode(uint8_t _work_mode)
-{
-    work_mode = _work_mode;
-}
-
-uint8_t Worker_driver::get_work_mode()
-{
-    return work_mode;
-}
-
 void Worker_driver::run(int work, int pause, int time)
 {
     if(time_new <= time)
