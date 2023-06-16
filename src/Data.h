@@ -3,23 +3,23 @@
 
 #include <Arduino.h>
 
-enum 
+enum
 {
-    //температура воздуха
+    // температура воздуха
     temp_inside,
     temp_inside_day,
     temp_inside_night,
     temp_required,
     temp_outside,
 
-    //влажность воздуха
+    // влажность воздуха
     hum_inside,
     hum_inside_day,
     hum_inside_night,
     hum_required,
     hum_outside,
 
-    //влажность почвы
+    // влажность почвы
     ground_hum,
     ground_hum_min_1,
     ground_hum_min_2,
@@ -30,7 +30,7 @@ enum
     ground_hum_max_3,
     ground_hum_max_4,
 
-    //интенсивносить освещения
+    // интенсивносить освещения
     white_bright_1,
     white_bright_2,
     white_bright_3,
@@ -42,14 +42,22 @@ enum
     white_bright_general,
     fito_bright_general,
 
-    //полив
+    //статусы устройств (вкл.выкл)
+    white_1_status,
+    white_2_status,
+    white_3_status,
+    white_4_status,
+    fito_1_status,
+    fito_2_status,
+    fito_3_status,
+    fito_4_status,
     water_tank_status,
     pump_1_status,
     pump_2_status,
     pump_3_status,
     pump_4_status,
-    
-    //время временные установки
+
+    // время и временные установки
     time,
     time_day,
     time_night,
@@ -74,11 +82,11 @@ enum
     pump_work_general,
     pump_pause_general,
 
-    //режим работы(work_mode)
-    //0 - принудительно остановлен
-    //1 - включен (индивидуальная схема работы)
-    //2 - включен (групповая схема работы)
-    //3 - включен постоянно / работа от датчика влажности
+    // режим работы индивидуальный(work_mode)
+    // 0 - принудительно остановлен
+    // 1 - включен (индивидуальная схема работы)
+    // 2 - включен (групповая схема работы)
+    // 3 - включен постоянно / работа от датчика влажности
     white_wm_1,
     white_wm_2,
     white_wm_3,
@@ -92,8 +100,15 @@ enum
     pump_wm_3,
     pump_wm_4,
 
+    // режим работы общий
+    // 0 - принудительно остановлен
+    // 1 - включен по времени
+    // 2 - включен всегда
+    white_wm_general,
+    fito_wm_general,
+    pump_wm_general,
 
-    //длина массива
+    // длина массива
     array_length
 };
 

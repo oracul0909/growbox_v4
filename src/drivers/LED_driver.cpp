@@ -11,3 +11,15 @@ void LED_driver::change_bright()
     if(intencity_index < intencity_index_new) {intencity_index++;}
     set_bright(intencity_steps[intencity_index]);
 }
+
+bool LED_driver::get_state()
+{
+    if(intencity_index > 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

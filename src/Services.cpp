@@ -29,9 +29,20 @@ void service_sensors_run()
     data[water_tank_status] = Tank.get_state();
 }
 
-void service_workers_mode()
+void service_devices_feedback()
 {
-    // code
+    data[white_1_status] = Section_1.LED_white.get_state();
+    data[white_2_status] = Section_2.LED_white.get_state();
+    data[white_3_status] = Section_3.LED_white.get_state();
+    data[white_4_status] = Section_4.LED_white.get_state();
+    data[fito_1_status] = Section_1.LED_fito.get_state();
+    data[fito_2_status] = Section_2.LED_fito.get_state();
+    data[fito_3_status] = Section_3.LED_fito.get_state();
+    data[fito_4_status] = Section_4.LED_fito.get_state();
+    data[pump_1_status] = Section_1.Pump.get_state();
+    data[pump_2_status] = Section_2.Pump.get_state();
+    data[pump_3_status] = Section_3.Pump.get_state();
+    data[pump_4_status] = Section_4.Pump.get_state();
 }
 
 void service_climat_control()
@@ -71,6 +82,8 @@ void service_section_control()
                          fito_stop_4,
                          pump_work_4,
                          pump_pause_4);
+    Section_general.white_control(data[white_wm_general]);
+    Section_general.fito_control(data[fito_wm_general]);
     Section_1.white_control(data[white_wm_1]);
     Section_2.white_control(data[white_wm_2]);
     Section_3.white_control(data[white_wm_3]);

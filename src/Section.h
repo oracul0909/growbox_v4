@@ -11,12 +11,16 @@ private:
     int white_pin;
     int fito_pin;
     int pump_pin;
-    LED_driver LED_white{white_pin};
-    LED_driver LED_fito{fito_pin};
-    Worker_driver Pump{pump_pin};
+
+    //виртуальная секция для общих настроек
     Section *General;
 
 public:
+    //объекты ламп и насоса секции
+    LED_driver LED_white{white_pin};
+    LED_driver LED_fito{fito_pin};
+    Worker_driver Pump{pump_pin};
+
     // общие параметры для групповой работы секций
     int white_bright;
     int fito_bright;
@@ -24,6 +28,8 @@ public:
     int fito_stop;
     int pump_work;
     int pump_pause;
+    int white_now;
+    int fito_now;
 
     Section() {}
 
@@ -67,6 +73,8 @@ public:
                     int _fito_stop,
                     int _pump_work,
                     int _pump_pause);
+
+    void get_devices_status();
 };
 
 #endif

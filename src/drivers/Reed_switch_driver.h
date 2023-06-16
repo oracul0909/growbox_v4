@@ -14,7 +14,7 @@ public:
         pinMode(_pin, INPUT);
     }
 
-    bool get_state();
+    bool get_state(void);
 };
 
 #endif

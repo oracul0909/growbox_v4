@@ -1,8 +1,8 @@
 #include "Water_tank.h"
 
-//переделать потом на побитовую матрицу состояний
 int Water_tank::get_state()
 {
+    //переделать потом на побитовую матрицу состояний
     if(Control.get_state() == true)
     {
         if(Low_switch.get_state() == true)

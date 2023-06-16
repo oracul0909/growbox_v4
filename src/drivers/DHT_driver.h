@@ -26,10 +26,10 @@ public:
     int8_t get_temperature(int addr);
 
     //Возвращает значение температуры датчика DHT
-    int8_t get_temperature_middle();
+    int8_t get_temperature_middle(void);
 
     //Возвращает значение температуры датчика DHT
-    int8_t get_temperature_delta();
+    int8_t get_temperature_delta(void);
 
     //Возвращает значение влажности датчика DHT
     uint8_t get_humidity(void);

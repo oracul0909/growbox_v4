@@ -7,25 +7,26 @@ void Section::white_control(int work_mode)
     switch (work_mode)
     {
     case 0:
-        LED_white.set_bright(0);
+        white_now = 0;
         break;
     case 1:
         if (data[time] >= data[time_day] && data[time] < data[time_night])
         {
-            LED_white.set_bright(white_bright);
+            white_now = white_bright;
         }
         else
         {
-            LED_white.set_bright(0);
+            white_now = 0;
         }
         break;
     case 2:
-        LED_white.set_bright(General->white_bright);
+        white_now = General->white_now;
         break;
     case 3:
-        LED_white.set_bright(white_bright);
+        white_now = white_bright;
         break;
     }
+    LED_white.set_bright(white_now);
     LED_white.change_bright();
 }
 
@@ -35,24 +36,26 @@ void Section::fito_control(int work_mode)
     {
     case 0:
         LED_fito.set_bright(0);
+        fito_now = 0;
         break;
     case 1:
         if (data[time] >= fito_start && data[time] < fito_stop)
         {
-            LED_fito.set_bright(fito_bright);
+            fito_now = fito_bright;
         }
         else
         {
-            LED_fito.set_bright(0);
+            fito_now = 0;
         }
         break;
     case 2:
-        LED_fito.set_bright(General->fito_bright);
+        fito_now = General->fito_bright;
         break;
     case 3:
-        LED_fito.set_bright(fito_bright);
+        fito_now = fito_bright;
         break;
     }
+    LED_fito.set_bright(fito_now);
     LED_fito.change_bright();
 }
 

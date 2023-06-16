@@ -19,3 +19,8 @@ void Worker_driver::run(int work, int pause, int time)
         digitalWrite(pin, worker_flag);
     }
 }
+
+bool Worker_driver::get_state()
+{
+    return worker_flag;
+}

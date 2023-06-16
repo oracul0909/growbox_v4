@@ -5,6 +5,7 @@ uint8_t CSMS_driver::get_moisture_middle(uint8_t tick)
 {
     int sum = 0;
     int moisture_temp = 0;
+    //переделать потом на нормальный фильтр(Калман или скользящее среднее)
     for (uint8_t i = 0; i < tick; i++)
     {
         sum += int(analogRead(pin));

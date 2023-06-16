@@ -22,6 +22,8 @@ public:
     /// @param pause время паузы(мин)
     /// @param time время системы(мин)
     void run(int work, int pause, int time);
+
+    bool get_state(void);
 };
 
 #endif

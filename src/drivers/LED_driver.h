@@ -22,7 +22,9 @@ public:
     void set_bright(uint8_t _bright_new);
 
     //Изменяет яркость лампы по заданному шагу
-    void change_bright();
+    void change_bright(void);
+
+    bool get_state(void);
 };
 
 #endif

@@ -33,10 +33,10 @@ public:
     int8_t get_temperature(int index);
 
     //Возвращает среднее значение температуры всех датчиков DS18b20 в группе
-    int8_t get_temperature_middle();
+    int8_t get_temperature_middle(void);
 
     //Возвращает разницу между максимальной и минимальной температурой всех датчиков DS18b20 в группе
-    int8_t get_temperature_delta();
+    int8_t get_temperature_delta(void);
 
     //Возвращает 0 (DS18b20 не измеряет влажность)
     uint8_t get_humidity(void);
