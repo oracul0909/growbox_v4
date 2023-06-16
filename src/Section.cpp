@@ -59,45 +59,45 @@ void Section::fito_control(int work_mode)
     LED_fito.change_bright();
 }
 
-void Section::pump_control(int work_mode, int ground_hum_min, int ground_hum_max)
+void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t ground_hum_max)
 {
     if (data[water_tank_status] > 1)
     {
         switch (work_mode)
         {
         case 0:
-            Pump.run(0, 1, data[time]);
+            Pump.stop();
             break;
         case 1:
-            Pump.run(pump_work, pump_pause, data[time]);
+            Pump.work_on_time(pump_work, pump_pause, data[time]);
             break;
         case 2:
             if (data[ground_hum] >= ground_hum_max)
             {
-                Pump.run(0, 1, data[time]);
+                Pump.stop();
             }
             else if (data[ground_hum] < ground_hum_min)
             {
-                Pump.run(1, 0, data[time]);
+                Pump.run();
             }
             break;
         case 3:
-            Pump.run(1, 0, data[time]);
+            Pump.run();
             break;
         }
     }
     else
     {
-        Pump.run(0, 1, data[time]);
+        Pump.stop();
     }
 }
 
-void Section::set_params(int _white_bright,
-                         int _fito_bright,
-                         int _fito_start,
-                         int _fito_stop,
-                         int _pump_work,
-                         int _pump_pause)
+void Section::set_params(uint16_t _white_bright,
+                         uint16_t _fito_bright,
+                         uint16_t _fito_start,
+                         uint16_t _fito_stop,
+                         uint16_t _pump_work,
+                         uint16_t _pump_pause)
 {
     white_bright = _white_bright;
     fito_bright = _fito_bright;

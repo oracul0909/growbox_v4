@@ -7,7 +7,7 @@ class Worker_driver
 {
 private:
     uint8_t pin;
-    int time_new;
+    uint16_t time_new;
     bool timer_flag;
     bool worker_flag;
 
@@ -21,7 +21,11 @@ public:
     /// @param work время работы(мин)
     /// @param pause время паузы(мин)
     /// @param time время системы(мин)
-    void run(int work, int pause, int time);
+    void work_on_time(uint16_t work, uint16_t pause, uint16_t time);
+
+    void run();
+
+    void stop();
 
     bool get_state(void);
 };

@@ -1,6 +1,6 @@
 #include "Worker_driver.h"
 
-void Worker_driver::run(int work, int pause, int time)
+void Worker_driver::work_on_time(uint16_t work, uint16_t pause, uint16_t time)
 {
     if(time_new <= time)
         {

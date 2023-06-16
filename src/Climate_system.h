@@ -6,11 +6,11 @@
 class Climate_system
 {
 private:
-    int heater_pin;
-    int cooler_pin;
-    int humidifier_pin;
-    int fan_inside_pin;
-    int fan_outside_pin;
+    uint8_t heater_pin;
+    uint8_t cooler_pin;
+    uint8_t humidifier_pin;
+    uint8_t fan_inside_pin;
+    uint8_t fan_outside_pin;
 
 public:
     //объекты обогревателя, охладителя, увлажнятора и вентиляторов
@@ -21,11 +21,11 @@ public:
     Worker_driver Fan_outside{fan_outside_pin};
 
     //конструкторы и методы
-    Climate_system(int _heater_pin,
-                   int _cooler_pin,
-                   int _humidifier_pin,
-                   int _fan_inside_pin,
-                   int _fan_outside_pin)
+    Climate_system(uint8_t _heater_pin,
+                   uint8_t _cooler_pin,
+                   uint8_t _humidifier_pin,
+                   uint8_t _fan_inside_pin,
+                   uint8_t _fan_outside_pin)
     {
         heater_pin = _heater_pin;
         cooler_pin = _cooler_pin;
@@ -33,6 +33,16 @@ public:
         fan_inside_pin = _fan_inside_pin;
         fan_outside_pin = _fan_outside_pin;
     }
+
+    void cool_down();
+
+    void warm_up();
+
+    void humidify();
+
+    void drain();
+
+    void stop();
 };
 
 #endif

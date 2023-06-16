@@ -17,14 +17,14 @@ private:
 
 public:
     // общие параметры для групповой работы секций
-    int white_bright;
-    int fito_bright;
-    int fito_start;
-    int fito_stop;
-    int pump_work;
-    int pump_pause;
-    int white_now;
-    int fito_now;
+    uint16_t white_bright;
+    uint16_t fito_bright;
+    uint16_t fito_start;
+    uint16_t fito_stop;
+    uint16_t pump_work;
+    uint16_t pump_pause;
+    uint16_t white_now;
+    uint16_t fito_now;
 
     // объекты ламп и насоса секции
     LED_driver LED_white{white_pin};
@@ -34,7 +34,7 @@ public:
     //конструкторы и методы
     Section() {}
 
-    Section(Section *_General, int _white_pin, int _fito_pin, int _pump_pin)
+    Section(Section *_General, uint8_t _white_pin, uint8_t _fito_pin, uint8_t _pump_pin)
     {
         General = _General;
         white_pin = _white_pin;
@@ -66,14 +66,14 @@ public:
     ///                  3 - включено всегда
     /// @param ground_hum_min Минимальный уровень влажности (%)
     /// @param ground_hum_max Максимальный уровень влажности (%)
-    void pump_control(int work_mode, int ground_hum_min, int ground_hum_max);
+    void pump_control(int work_mode, uint16_t ground_hum_min, uint16_t ground_hum_max);
 
-    void set_params(int _white_bright,
-                    int _fito_bright,
-                    int _fito_start,
-                    int _fito_stop,
-                    int _pump_work,
-                    int _pump_pause);
+    void set_params(uint16_t _white_bright,
+                    uint16_t _fito_bright,
+                    uint16_t _fito_start,
+                    uint16_t _fito_stop,
+                    uint16_t _pump_work,
+                    uint16_t _pump_pause);
 
     void get_devices_status();
 };
