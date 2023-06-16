@@ -1,9 +1,22 @@
 #include "Services.h"
-#include "Arduino_FreeRTOS.h"
 
 extern uint16_t data[array_length];
 
 // #define data(x) data[x]
+
+CSMS_driver CSMS(CSMS_PIN);
+DHT_driver DHT_inside(DHT_INSIDE_PIN);
+DHT_driver DHT_outside(DHT_OUTSIDE_PIN);
+DS18B20_driver DS(DS18B20_PIN);
+
+Section Section_general;
+Section Section_1(&Section_general, WHITE_PIN_1, FITO_PIN_1, PUMP_PIN_1);
+Section Section_2(&Section_general, WHITE_PIN_2, FITO_PIN_2, PUMP_PIN_2);
+Section Section_3(&Section_general, WHITE_PIN_3, FITO_PIN_3, PUMP_PIN_3);
+Section Section_4(&Section_general, WHITE_PIN_4, FITO_PIN_4, PUMP_PIN_4);
+Water_tank Tank(CONTROL_PIN, LOW_SWITCH_PIN, NORMAL_SWITCH_PIN);
+
+
 
 void service_day_phase()
 {
@@ -96,34 +109,4 @@ void service_section_control()
     Section_2.pump_control(data[pump_wm_2], data[ground_hum_min_2], data[ground_hum_max_2]);
     Section_3.pump_control(data[pump_wm_3], data[ground_hum_min_3], data[ground_hum_max_3]);
     Section_4.pump_control(data[pump_wm_4], data[ground_hum_min_4], data[ground_hum_max_4]);
-}
-
-void tasks_init()
-{
-    xTaskCreate(Task_1, "task1", 128, NULL, 1, NULL);
-    xTaskCreate(Task_2, "task2", 128, NULL, 1, NULL);
-}
-
-void Task_1(void *pvParameters)
-{
-    (void)pvParameters;
-    pinMode(LED_BUILTIN, OUTPUT);
-
-    for (;;)
-    {
-        service_section_control();
-        vTaskDelay(1000 / portTICK_PERIOD_MS); // wait for one second
-    }
-}
-
-void Task_2(void *pvParameters)
-{
-    (void)pvParameters;
-
-    for (;;)
-    {
-        int sensorValue = analogRead(A0);
-        Serial.println(sensorValue);
-        vTaskDelay(1); // one tick delay (15ms) in between reads for stability
-    }
 }

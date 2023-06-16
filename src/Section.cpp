@@ -99,10 +99,10 @@ void Section::set_params(int _white_bright,
                          int _pump_work,
                          int _pump_pause)
 {
-    int white_bright = _white_bright;
-    int fito_bright = _fito_bright;
-    int fito_start = _fito_start;
-    int fito_stop = _fito_stop;
-    int pump_work = _pump_work;
-    int pump_pause = _pump_pause;
+    white_bright = _white_bright;
+    fito_bright = _fito_bright;
+    fito_start = _fito_start;
+    fito_stop = _fito_stop;
+    pump_work = _pump_work;
+    pump_pause = _pump_pause;
 }

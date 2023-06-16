@@ -6,13 +6,13 @@
 class LED_driver
 {
 private:
-    int pin;
+    uint8_t pin;
     uint8_t intencity_index = 0;
     uint8_t intencity_index_new = 0;
     uint8_t intencity_steps[11] {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
 
 public:
-    LED_driver(int _pin)
+    LED_driver(uint8_t _pin)
     {
         pin = _pin;
     }

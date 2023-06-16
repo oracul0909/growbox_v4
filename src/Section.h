@@ -8,19 +8,14 @@
 class Section
 {
 private:
-    int white_pin;
-    int fito_pin;
-    int pump_pin;
+    uint8_t white_pin;
+    uint8_t fito_pin;
+    uint8_t pump_pin;
 
-    //виртуальная секция для общих настроек
+    // виртуальная секция для общих настроек
     Section *General;
 
 public:
-    //объекты ламп и насоса секции
-    LED_driver LED_white{white_pin};
-    LED_driver LED_fito{fito_pin};
-    Worker_driver Pump{pump_pin};
-
     // общие параметры для групповой работы секций
     int white_bright;
     int fito_bright;
@@ -31,6 +26,12 @@ public:
     int white_now;
     int fito_now;
 
+    // объекты ламп и насоса секции
+    LED_driver LED_white{white_pin};
+    LED_driver LED_fito{fito_pin};
+    Worker_driver Pump{pump_pin};
+
+    //конструкторы и методы
     Section() {}
 
     Section(Section *_General, int _white_pin, int _fito_pin, int _pump_pin)
