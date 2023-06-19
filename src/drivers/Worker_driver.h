@@ -23,7 +23,7 @@ public:
     /// @param time время системы(мин)
     void work_on_time(uint16_t work, uint16_t pause, uint16_t time);
 
-    void run();
+    void run(bool flag);
 
     void stop();
 

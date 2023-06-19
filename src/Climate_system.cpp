@@ -3,63 +3,99 @@
 
 extern uint16_t data[array_length];
 
-void Climate_system::cool_down()
+void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
 {
-    if(data[temp_inside] >= data[temp_outside])
+    if (time_new <= data[time])
     {
-        Fan_outside.stop();
-        Cooler.work_on_time(10, 10, data[time]);
-        Fan_inside.run();
+        timer_flag = !timer_flag;
+    }
+    if (data[temp_inside] >= data[temp_outside])
+    {
+        if (timer_flag == true)
+        {
+            time_new = time + work_time;
+            mask = B10010;
+        }
+        else if (timer_flag == false)
+        {
+            time_new = time + pause_time;
+            mask = B00010;
+        }
     }
     else
     {
-        Fan_outside.run();
+        mask = B00001;
     }
 }
 
-void Climate_system::warm_up()
+void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
 {
-    if(data[temp_inside] <= data[temp_outside])
+    if (time_new <= data[time])
     {
-        Fan_outside.stop();
-        Heater.work_on_time(5, 5, data[time]);
-        Fan_inside.run();
+        timer_flag = !timer_flag;
+    }
+    if (data[temp_inside] <= data[temp_outside])
+    {
+        if (timer_flag == true)
+        {
+            time_new = time + work_time;
+            mask = B10010;
+        }
+        else if (timer_flag == false)
+        {
+            time_new = time + pause_time;
+            mask = B00010;
+        }
     }
     else
     {
-        Fan_outside.run();
+        mask = B00001;
     }
 }
 
 void Climate_system::humidify()
 {
-    if(data[hum_inside] <= data[hum_outside])
+    if (data[hum_inside] <= data[hum_outside])
     {
-        Fan_outside.stop();//code
-        Humidifier.run();
+        mask = B00100;
     }
     else
     {
-        Fan_outside.run();
+        mask = B00001;
     }
 }
 
-void Climate_system::drain()
+void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
 {
-    if(data[hum_inside] >= data[hum_outside])
+    if (time_new <= data[time])
     {
-        Fan_outside.stop();//code
+        timer_flag = !timer_flag;
+    }
+    if (data[hum_inside] >= data[hum_outside])
+    {
+        if (timer_flag == true)
+        {
+            time_new = time + freeze_time;
+            mask = B01000;
+        }
+        else if (timer_flag == false)
+        {
+            time_new = time + defrost_time;
+            mask = B10000;
+        }
     }
     else
     {
-        Fan_outside.run();
+        mask = B00001;
     }
 }
 
-void Climate_system::stop()
+void Climate_system::system_run()
 {
-    Cooler.stop();
-    Heater.stop();
-    Fan_inside.stop();
-    Fan_outside.stop();
+    Fan_outside.run(mask & (1 << 0));
+    Fan_inside.run(mask & (1 << 1));
+    Humidifier.run(mask & (1 << 2));
+    Cooler.run(mask & (1 << 3));
+    Heater.run(mask & (1 << 4));
+    
 }

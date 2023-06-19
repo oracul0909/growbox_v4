@@ -16,7 +16,7 @@ Section Section_3(&Section_general, WHITE_PIN_3, FITO_PIN_3, PUMP_PIN_3);
 Section Section_4(&Section_general, WHITE_PIN_4, FITO_PIN_4, PUMP_PIN_4);
 Water_tank Tank(CONTROL_PIN, LOW_SWITCH_PIN, NORMAL_SWITCH_PIN);
 
-
+Climate_system Climate(HEATER_PIN, COOLER_PIN, HUMIDIFIER_PIN, FAN_INSIDE_PIN, FAN_OUTSIDE_PIN);
 
 void service_day_phase()
 {
@@ -60,7 +60,23 @@ void service_devices_feedback()
 
 void service_climat_control()
 {
-    // code
+    if(data[temp_inside] > data[temp_required])
+    {
+        Climate.cool_down(10, 5);
+    }
+    else
+    {
+        Climate.warm_up(5, 5);
+    }
+    if(data[hum_inside] > data[hum_required])
+    {
+        Climate.drain(10, 5);
+    }
+    else
+    {
+        Climate.humidify();
+    }
+    Climate.system_run();
 }
 
 void service_section_control()

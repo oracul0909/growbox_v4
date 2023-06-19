@@ -6,6 +6,7 @@
 #include "drivers/CSMS_driver.h"
 #include "drivers/DHT_driver.h"
 #include "drivers/DS18b20_driver.h"
+#include "Climate_system.h"
 #include "Water_tank.h"
 #include "Section.h"
 

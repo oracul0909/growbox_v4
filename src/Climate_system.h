@@ -11,6 +11,12 @@ private:
     uint8_t humidifier_pin;
     uint8_t fan_inside_pin;
     uint8_t fan_outside_pin;
+    uint16_t time_new;
+    bool timer_flag;
+    bool worker_flag;
+
+    // | нагрев | охлад | увлажн | вент.внутр | вент.наруж |
+    byte mask = B00000;
 
 public:
     //объекты обогревателя, охладителя, увлажнятора и вентиляторов
@@ -34,15 +40,26 @@ public:
         fan_outside_pin = _fan_outside_pin;
     }
 
-    void cool_down();
+    /// @brief Система охлаждения
+    /// @param work_time Время работы охладителя (мин)
+    /// @param pause_time Время паузы охладителя (мин)
+    void cool_down(uint16_t work_time, uint16_t pause_time);
 
-    void warm_up();
+    /// @brief Система подогрева
+    /// @param work_time Время работы нагревателя (мин)
+    /// @param pause_time Время паузы нагревателя (мин)
+    void warm_up(uint16_t work_time, uint16_t pause_time);
 
+    //Система увлажнения
     void humidify();
+    
+    /// @brief Система охлаждения
+    /// @param work_time Время работы охладителя (мин)
+    /// @param pause_time Время работы нагревателя (мин)
+    void drain(uint16_t freeze_time, uint16_t defrost_time);
 
-    void drain();
-
-    void stop();
+    //Запускает устройства системы по заданным условиям
+    void system_run();
 };
 
 #endif

@@ -20,6 +20,17 @@ void Worker_driver::work_on_time(uint16_t work, uint16_t pause, uint16_t time)
     }
 }
 
+void Worker_driver::run(bool flag)
+{
+    digitalWrite(pin, flag);
+}
+
+void Worker_driver::stop()
+{
+    worker_flag = false;
+    digitalWrite(pin, worker_flag);
+}
+
 bool Worker_driver::get_state()
 {
     return worker_flag;
