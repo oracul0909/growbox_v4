@@ -99,3 +99,12 @@ void Climate_system::system_run()
     Heater.run(mask & (1 << 4));
     
 }
+
+void Climate_system::devices_status()
+{
+    data[heater_status] = (mask & (1 << 4));
+    data[cooler_status] = (mask & (1 << 3));
+    data[humidifier_status] = (mask & (1 << 2));
+    data[fan_inside_status] = (mask & (1 << 1));
+    data[fan_outside_status] = (mask & (1 << 0));
+}

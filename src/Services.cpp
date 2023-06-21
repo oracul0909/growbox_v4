@@ -56,6 +56,7 @@ void service_devices_feedback()
     data[pump_2_status] = Section_2.Pump.get_state();
     data[pump_3_status] = Section_3.Pump.get_state();
     data[pump_4_status] = Section_4.Pump.get_state();
+    Climate.devices_status();
 }
 
 void service_climat_control()

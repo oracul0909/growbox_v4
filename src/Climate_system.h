@@ -60,6 +60,8 @@ public:
 
     //Запускает устройства системы по заданным условиям
     void system_run();
+
+    void devices_status();
 };
 
 #endif

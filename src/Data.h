@@ -51,11 +51,16 @@ enum
     fito_2_status,
     fito_3_status,
     fito_4_status,
-    water_tank_status,
     pump_1_status,
     pump_2_status,
     pump_3_status,
     pump_4_status,
+    water_tank_status,
+    heater_status,
+    cooler_status,
+    humidifier_status,
+    fan_inside_status,
+    fan_outside_status,
 
     // время и временные установки
     time,
