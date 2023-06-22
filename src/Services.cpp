@@ -59,23 +59,30 @@ void service_devices_feedback()
     Climate.devices_status();
 }
 
-void service_climat_control()
+void service_climate_control()
 {
-    if(data[temp_inside] > data[temp_required])
+    if (data[temp_inside] > (data[temp_required] + 1))
     {
         Climate.cool_down(10, 5);
     }
-    else
+    else if (data[temp_inside] < (data[temp_required] - 1))
     {
         Climate.warm_up(5, 5);
     }
-    if(data[hum_inside] > data[hum_required])
-    {
-        Climate.drain(10, 5);
-    }
     else
     {
-        Climate.humidify();
+        if (data[hum_inside] > (data[hum_required] + 1))
+        {
+            Climate.drain(10, 5);
+        }
+        else if (data[hum_inside] < (data[hum_required] - 1))
+        {
+            Climate.humidify();
+        }
+        else
+        {
+            Climate.stop();
+        }
     }
     Climate.system_run();
 }

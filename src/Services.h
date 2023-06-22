@@ -14,7 +14,7 @@ void service_day_phase();
 
 void service_devices_feedback();
 
-void service_climat_control();
+void service_climate_control();
 
 void service_section_control();
 

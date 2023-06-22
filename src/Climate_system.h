@@ -58,6 +58,8 @@ public:
     /// @param pause_time Время работы нагревателя (мин)
     void drain(uint16_t freeze_time, uint16_t defrost_time);
 
+    void stop();
+
     //Запускает устройства системы по заданным условиям
     void system_run();
 

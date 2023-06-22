@@ -90,6 +90,11 @@ void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
     }
 }
 
+void Climate_system::stop()
+{
+    mask = B00000;
+}
+
 void Climate_system::system_run()
 {
     Fan_outside.run(mask & (1 << 0));
