@@ -15,6 +15,7 @@ Section Section_2(&Section_general, WHITE_PIN_2, FITO_PIN_2, PUMP_PIN_2);
 Section Section_3(&Section_general, WHITE_PIN_3, FITO_PIN_3, PUMP_PIN_3);
 Section Section_4(&Section_general, WHITE_PIN_4, FITO_PIN_4, PUMP_PIN_4);
 Water_tank Tank(CONTROL_PIN, LOW_SWITCH_PIN, NORMAL_SWITCH_PIN);
+Reed_switch_driver Lock(LOCK_PIN);
 
 Climate_system Climate(HEATER_PIN, COOLER_PIN, HUMIDIFIER_PIN, FAN_INSIDE_PIN, FAN_OUTSIDE_PIN);
 
@@ -22,11 +23,13 @@ void service_day_phase()
 {
     if (data[time] >= data[time_day] && data[time] < data[time_night])
     {
+        data[day_phase] = 1;
         data[temp_required] = data[temp_inside_day];
         data[hum_required] = data[hum_inside_day];
     }
     else
     {
+        data[day_phase] = 0;
         data[temp_required] = data[temp_inside_night];
         data[hum_required] = data[hum_inside_night];
     }
@@ -40,6 +43,7 @@ void service_sensors_run()
     data[hum_outside] = DHT_outside.get_humidity();
     data[ground_hum] = CSMS.get_moisture_middle(5);
     data[water_tank_status] = Tank.get_state();
+    data[lock_status] = Lock.get_state();
 }
 
 void service_devices_feedback()
