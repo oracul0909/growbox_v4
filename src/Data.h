@@ -108,6 +108,8 @@ enum
     fito_wm_general,
     pump_wm_general,
 
+    //Контрольная сумма данных
+    _crc,
     // длина массива
     array_length
 };
