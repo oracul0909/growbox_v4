@@ -5,7 +5,6 @@ extern uint16_t data[array_length];
 
 #define _DATA_ADR data
 
-
 struct Data_struct_tupe
 {
 uint16_t _DATA_ADR[array_length];
@@ -36,8 +35,13 @@ EEPROM_status_t EEPROM_Load()
 
 EEPROM_status_t EEPROM_Remap()
 {
+  Data_struct_tupe New_Struct;
+  New_Struct._DATA_ADR[_crc] = CFG_EEPROOM_INIT_CRC;
 
+  memcpy(Data_struct._DATA_ADR, New_Struct._DATA_ADR, sizeof(_DATA_ADR));
+  memcpy(Data_struct._DATA_ADR, _DATA_ADR, sizeof(_DATA_ADR));
 
+  EEPROM_Save();
 
 
 }
