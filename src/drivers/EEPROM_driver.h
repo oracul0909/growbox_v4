@@ -6,24 +6,11 @@
     - Чтение блоков 
     - Запись блоков
     - Создание и расчет контрольной суммы
-
+    - Логирование результата работы
 
    @author DIULINI
    @date 21.06.2023
 */
-/*
-
-
-
-
-
-*/
-
-
-
-
-
-
 
 #ifndef EEPROM_DRIVER_H
 #define EEPROM_DRIVER_H
@@ -32,6 +19,16 @@
 
 
 
+/// @brief  Энумератор операций процедур
+typedef enum
+{
+    _status_eeprom_operation_read,
+    _status_eeprom_operation_write,
+    _status_eeprom_operation_remap,
+    _status_eeprom_operation_verify
+}EEPROM_status_operation_t;
+
+/// @brief Энумератор статусов процедуры
 typedef enum 
 {
    EEPROM_status_OK,    //Успех
@@ -75,11 +72,6 @@ EEPROM_status_t EEPROM_Load();
 ///@return Результат проверки контрольной суммы чтения  
 EEPROM_status_t EEPROM_Remap();
 
-
-
-
-
-
 /// @brief 
 /// @param Data Указатель на блок данных
 /// @param length Длина блока данных
@@ -96,6 +88,55 @@ EEPROM_status_t _EEPROM_ReadBlock(uint8_t *Data, int length, int pos);
 
 
 
+#define _CFG_EEPROM_LOG_ENABLED    /// @brief Закоментировать, чтобы отключить лог
+#define _CFG_EEPROM_LOG_MAX_VALUES 4 ///длина кольцевого буфера логов
+
+//тип лога данных 
+#define _CFG_EEPROM_LOG_TYPE_RING
+//define _CFG_EEPROM_LOG_TYPE_QUEUE 
+
+#if defined(_CFG_EEPROM_LOG_ENABLED)
+    /// @brief Структура информации о последнем результате EEprom
+    typedef struct 
+    {
+        uint8_t instruction;
+        uint8_t status;
+    }EEPROM_driver_status_now_t;
+
+    #if defined(_CFG_EEPROM_LOG_TYPE_RING)
+        typedef struct 
+        {
+            EEPROM_driver_status_now_t log[_CFG_EEPROM_LOG_MAX_VALUES];
+            uint8_t counter_of_log;
+        }EEPROM_driver_status_log_t;
+    #endif 
+
+    #if defined (_CFG_EEPROM_LOG_TYPE_QUEUE)
+        //Очередь позже, когда нибудь
+    #endif
+
+    #if defined(_CFG_EEPROM_LOG_TYPE_QUEUE) & defined(_CFG_EEPROM_LOG_TYPE_RING)
+        #error "_CFG_EEPROM_TYPE ERROR. Не может быть двух типов лога разом"
+    #endif
+    
+    /// @brief Добавление данных в лог  
+    /// @param operation Код операции по EEPROM_status_operation_t
+    /// @param status код статуса по EEPROM_status_t
+    void _EEPROM_driver_addlog(EEPROM_status_operation_t operation, EEPROM_status_t status);
+
+    /// @brief Чтение данных из лога. Базовая перегрузка
+    /// @param pos 
+    /// @return структура uint8_t данных статуса
+    EEPROM_driver_status_now_t _EEPROM_driver_readLog(uint8_t pos);
+
+    /// @brief Чтение последней метки
+    /// @return  структура uint8_t данных статуса
+    EEPROM_driver_status_now_t _EEPROM_driver_readLog();
+
+    /// @brief доступно сообщений EEPROM 
+    /// @return Кол-во доступных сообщений
+    uint8_t _EEPROM_driver_log_available(); 
+#endif
 
 
 
