@@ -1,10 +1,14 @@
-#ifndef DATA_H
-#define DATA_H
+#include "Nextion_driver.h"
+#include "./Data.h"
+#include "./Utils/CRC_module.h"
 
-#include <Arduino.h>
 
-enum
-{
+extern uint16_t data[array_length];
+
+#define _DATA_ADR data
+
+    uint8_t _nextion_driver_ring[] =
+    {
     // температура воздуха
     temp_inside,
     temp_inside_day,
@@ -51,24 +55,16 @@ enum
     fito_2_status,
     fito_3_status,
     fito_4_status,
+    water_tank_status,
     pump_1_status,
     pump_2_status,
     pump_3_status,
     pump_4_status,
-    water_tank_status,
-    lock_status,
-    heater_status,
-    cooler_status,
-    humidifier_status,
-    fan_inside_status,
-    fan_outside_status,
 
     // время и временные установки
     time,
     time_day,
     time_night,
-    day_phase,
-    time_format,
     fito_start_1,
     fito_start_2,
     fito_start_3,
@@ -115,12 +111,84 @@ enum
     white_wm_general,
     fito_wm_general,
     pump_wm_general,
+    };
 
-    //Контрольная сумма данных (Индикатор правильных полей)
-    _crc,
-    // длина массива
-    array_length
-};
 
-#endif
 
+
+
+
+void Nextion_driver_init()
+{
+    _CFG_NEXTION_DRIVER_PORT.begin(_CFG_NEXTION_DRIVER_BAUD);
+}
+
+/// @brief Принятие данных с экрана
+uint8_t Nextion_driver_receive()
+{
+    if(_CFG_NEXTION_DRIVER_PORT.available()>6)
+    {
+        String msg = _CFG_NEXTION_DRIVER_PORT.readStringUntil(_CFG_NEXTION_DRIVER_Base_msg_devider);
+
+    	uint8_t count_of_operators=0;
+
+	    char *p = (char *)msg.c_str();
+        char *str;
+
+        String messages[_CFG_NEXTION_DRIVER__MAX_OPERATORS_COUNT];
+
+        while ((str = strtok_r(p, " *#:&", &p)) != NULL)
+        {
+            if(count_of_operators<_CFG_NEXTION_DRIVER__MAX_OPERATORS_COUNT)
+            {
+                String dat = String(str);
+                dat.trim();
+                messages[count_of_operators] = dat;
+                count_of_operators++;
+            }
+        }
+    
+        if(count_of_operators>1)
+        {
+            int dest = messages[0].toInt();
+            int val = messages[1].toInt();
+            _DATA_ADR[dest] = val;
+            return (uint8_t)dest;
+        }
+    }
+    return 0x00;
+}
+
+
+uint8_t _Nextion_driver_ring_MaxCount = sizeof(_nextion_driver_ring);
+/// @brief Передача соббщений по кольцу
+void Nextion_driver_transmit_ring()
+{
+   if( _CFG_NEXTION_DRIVER_PORT.availableForWrite()<255)
+   {
+    static uint8_t Ring_pos = 0x00;
+    _CFG_NEXTION_DRIVER_PORT.print(_CFG_NEXTION_DRIVER_Base_msg);
+    _CFG_NEXTION_DRIVER_PORT.print(Ring_pos, DEC);
+    _CFG_NEXTION_DRIVER_PORT.print('=');
+    _CFG_NEXTION_DRIVER_PORT.print(String(data[_nextion_driver_ring[Ring_pos]]));
+    _NextionDriver_endOfMsg();
+    Ring_pos++;
+    if(Ring_pos>= _Nextion_driver_ring_MaxCount)Ring_pos=0x00;
+   }
+}
+
+/// @brief Передача прямого сообщения 
+/// @param msg Сообщение
+void Nextion_driver_transmit_Now(String msg)
+{
+    _CFG_NEXTION_DRIVER_PORT.print(msg);
+    _NextionDriver_endOfMsg();
+}
+
+
+void _NextionDriver_endOfMsg()
+{
+    _CFG_NEXTION_DRIVER_PORT.write(0xFF);
+    _CFG_NEXTION_DRIVER_PORT.write(0xFF);
+    _CFG_NEXTION_DRIVER_PORT.write(0xFF);
+}
