@@ -1,6 +1,7 @@
 #include "EEPROM_driver.h"
 #include "./Data.h"
 #include "./Utils/CRC_module.h"
+#include "avr/eeprom.h"
 
 extern uint16_t data[array_length];
 
@@ -15,13 +16,13 @@ uint16_t _DATA_ADR[array_length];
 void EEPROM_Save()
 {
   memcpy(Data_struct._DATA_ADR, _DATA_ADR, sizeof(_DATA_ADR));
-  _EEPROM_WriteBlock((uint8_t*)&Data_struct._DATA_ADR, int(sizeof(Data_struct.data)));
+  _EEPROM_WriteBlock((uint8_t*)&Data_struct._DATA_ADR, int(sizeof(Data_struct.data)), 0);
 }
 
 
 EEPROM_status_t EEPROM_Load()
 {
-  EEPROM_status_t OPstatus = _EEPROM_ReadBlock((uint8_t *)&Data_struct, sizeof(Data_struct));
+  EEPROM_status_t OPstatus = _EEPROM_ReadBlock((uint8_t *)&Data_struct, (int)sizeof(Data_struct), 0);
   
   if(OPstatus!=EEPROM_status_OK)
     return OPstatus;
@@ -60,7 +61,7 @@ EEPROM_status_t _EEPROM_WriteBlock(uint8_t *Data, int length, int pos = 0)
     return EEPROM_status_ADDR_INVALID;
   if(pos+length> CFG_EEPROM_SIZE_MAX)
     return EEPROM_status_OUT_OF_MEM;
-  eeprom_write_block((void*)&Data,  (void*)&pos, length);
+  eeprom_update_block((void*)&Data,  (void*)&pos, length);
   return EEPROM_status_OK;
 }
 
@@ -78,27 +79,28 @@ EEPROM_status_t _EEPROM_ReadBlock(uint8_t *Data, int length, int pos = 0)
 
 
 #if defined(_CFG_EEPROM_LOG_ENABLED)
+
     void _EEPROM_driver_addlog(EEPROM_status_operation_t operation, EEPROM_status_t status)
     {
-
 
     }
 
 
     EEPROM_driver_status_now_t _EEPROM_driver_readLog(uint8_t pos)
     {
-
-
+      EEPROM_driver_status_now_t out;
+      return out;
     }
 
 
     EEPROM_driver_status_now_t _EEPROM_driver_readLog()
     {
-      _EEPROM_driver_readLog(-1);
+      return _EEPROM_driver_readLog(-1);
     }
 
-    uint8_t _EEPROM_driver_log_available(); 
-
-
+    uint8_t _EEPROM_driver_log_available()
+    {
+      return 0x00;
+    }
 
 #endif 
