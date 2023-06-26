@@ -101,7 +101,7 @@ void Climate_system::system_run()
     Fan_inside.run(mask & (1 << 1));
     Humidifier.run(mask & (1 << 2));
     Cooler.run(mask & (1 << 3));
-    Heater.run(mask & (1 << 4));
+    Heater.run(bool(mask & (1 << 4)));
     
 }
 

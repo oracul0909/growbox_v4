@@ -61,12 +61,13 @@ void Section::fito_control(int work_mode)
 
 void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t ground_hum_max)
 {
+    bool pump_flag;
     if (data[water_tank_status] > 1)
     {
         switch (work_mode)
         {
         case 0:
-            Pump.stop();
+            pump_flag = false;
             break;
         case 1:
             Pump.work_on_time(pump_work, pump_pause, data[time]);
@@ -74,22 +75,23 @@ void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t grou
         case 2:
             if (data[ground_hum] >= ground_hum_max)
             {
-                Pump.stop();
+                pump_flag = false;
             }
             else if (data[ground_hum] < ground_hum_min)
             {
-                Pump.run();
+                pump_flag = true;
             }
             break;
         case 3:
-            Pump.run();
+            pump_flag = true;
             break;
         }
     }
     else
     {
-        Pump.stop();
+        pump_flag = false;
     }
+    Pump.run(pump_flag);
 }
 
 void Section::set_params(uint16_t _white_bright,

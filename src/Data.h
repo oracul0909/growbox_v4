@@ -89,6 +89,8 @@ enum
     fito_stop_general,
     pump_work_general,
     pump_pause_general,
+    fan_inside_work,
+    fan_insode_pause,
 
     // режим работы индивидуальный(work_mode)
     // 0 - принудительно остановлен
@@ -115,6 +117,10 @@ enum
     white_wm_general,
     fito_wm_general,
     pump_wm_general,
+
+    //уровень CO2
+    CO2_day,
+    CO2_night,
 
     //Контрольная сумма данных (Индикатор правильных полей)
     _crc,

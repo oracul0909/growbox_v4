@@ -25,8 +25,6 @@ public:
 
     void run(bool flag);
 
-    void stop();
-
     bool get_state(void);
 };
 

@@ -25,6 +25,7 @@ public:
     uint16_t pump_pause;
     uint16_t white_now;
     uint16_t fito_now;
+    bool pump_now;
 
     // объекты ламп и насоса секции
     LED_driver LED_white{white_pin};
