@@ -6,16 +6,16 @@
 class Water_tank
 {
 private:
-    int control_pin;
-    int normal_pin;
-    int low_pin;
+    uint8_t control_pin;
+    uint8_t normal_pin;
+    uint8_t low_pin;
 
     Reed_switch_driver Control{control_pin};
     Reed_switch_driver Normal_switch{normal_pin};
     Reed_switch_driver Low_switch{low_pin};
 
 public:
-    Water_tank(int _control_pin, int _low_pin, int _normal_pin)
+    Water_tank(uint8_t _control_pin, uint8_t _low_pin, uint8_t _normal_pin)
     {
         control_pin = _control_pin;
         normal_pin = _normal_pin;
