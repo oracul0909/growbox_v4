@@ -3,6 +3,13 @@
 
 #include "DallasTemperature.h"
 
+#define DEBUG
+#if defined(DEBUG)
+    #define  deb_print(x) Serial.println(x)
+ #else
+    #define  deb_print(x) 
+ #endif
+
 class DS18B20_driver
 {
 private:
@@ -17,6 +24,8 @@ private:
 public:
     DS18B20_driver(uint8_t _pin)
     {
+        deb_print("18B20 Begin");
+        delay(150);
         pin = _pin;
         ds18b20.begin();
         count_sensors = ds18b20.getDS18Count();
@@ -24,6 +33,7 @@ public:
         {
             ds18b20.getAddress(sensorsUnique[i], i);
         }
+        deb_print("18B20 END");
     }
 
     //Возвращает значение температуры датчика DS18b20 с 0 индексом
