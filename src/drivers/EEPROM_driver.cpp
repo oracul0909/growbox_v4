@@ -38,10 +38,14 @@ EEPROM_status_t EEPROM_Load()
 EEPROM_status_t EEPROM_Remap()
 {
   Data_struct_tupe New_Struct;
-  New_Struct._DATA_ADR[_crc] = CFG_EEPROOM_INIT_CRC;
-
+  
   memcpy(Data_struct._DATA_ADR, New_Struct._DATA_ADR, sizeof(_DATA_ADR));
   memcpy(Data_struct._DATA_ADR, _DATA_ADR, sizeof(_DATA_ADR));
+  EEPROM_Save();
+  
+  memcpy(Data_struct._DATA_ADR, New_Struct._DATA_ADR, sizeof(_DATA_ADR));
+  memcpy(Data_struct._DATA_ADR, _DATA_ADR, sizeof(_DATA_ADR));
+  New_Struct._DATA_ADR[_crc] = CFG_EEPROOM_INIT_CRC;
 
   EEPROM_Save();
   uint8_t Uploaded_CRC = Calc_CRC_8((uint8_t *) &Data_struct.data, sizeof(Data_struct.data));
@@ -89,6 +93,7 @@ EEPROM_status_t _EEPROM_ReadBlock(uint8_t *Data, int length, int pos = 0)
     EEPROM_driver_status_now_t _EEPROM_driver_readLog(uint8_t pos)
     {
       EEPROM_driver_status_now_t out;
+      out.instruction = 0x01;
       return out;
     }
 

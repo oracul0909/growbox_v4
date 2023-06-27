@@ -156,7 +156,7 @@ uint8_t Nextion_driver_receive()
             return (uint8_t)dest;
         }
     }
-    return 0x00;
+    return 0xff;
 }
 
 

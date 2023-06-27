@@ -41,7 +41,7 @@ typedef enum
 
 
 /// @brief  Энумератор END_POINT of memory 
-typedef enum
+enum
 {
     EEPROM_MODEL_1KB_max = 1023,
     EEPROM_MODEL_2KB_max = 2047,

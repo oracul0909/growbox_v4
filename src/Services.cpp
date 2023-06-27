@@ -138,3 +138,95 @@ void service_section_control()
     Section_3.pump_control(data[pump_wm_3], data[ground_hum_min_3], data[ground_hum_max_3]);
     Section_4.pump_control(data[pump_wm_4], data[ground_hum_min_4], data[ground_hum_max_4]);
 }
+
+
+
+
+
+void service_data_handler()
+{
+    static bool inited = false;
+    if(!inited)
+    {
+        Modbus_Driver_Init();
+        Nextion_driver_init();
+        inited = true;    
+    }
+
+    uint8_t f_writed_data = 0x00; 
+
+    if(Modbus_Driver_handler()==ModbusDriver_rsv_comp){f_writed_data++;}
+
+    uint8_t f_data_enum =  Nextion_driver_receive();
+
+    if(f_writed_data!=0x00 | (f_data_enum!= time & f_data_enum !=0xff) | data[_EEprom_save]==1)
+    {
+        data[_EEprom_save]==0;
+        EEPROM_Save();
+    }
+
+    Nextion_driver_transmit_ring();
+}
+
+
+
+
+void service_init_mem()
+{
+  EEPROM_status_t memStatus_t = EEPROM_Load();
+    if(memStatus_t!= EEPROM_status_OK)
+    {
+        service_data_handler();
+        delay(250);
+        Nextion_driver_transmit_Now("page 18");
+
+        switch((uint8_t)memStatus_t)
+        {
+            case (uint8_t)EEPROM_status_ERR_CRC:
+                Nextion_driver_transmit_Now("t1.txt=\"eep0x00->0x05\"");
+            break;
+
+            case (uint8_t)EEPROM_status_MAP_INVALID:
+                Nextion_driver_transmit_Now("t1.txt=\"eep0x00->0x04\"");
+                delay(5000);
+                Nextion_driver_transmit_Now("t0.txt=\"proc->0x02\"");
+                Nextion_driver_transmit_Now("t1.txt=\"eep0x02->0x03\"");
+                delay(5000);
+                if(EEPROM_Remap()!=EEPROM_status_OK)
+                {
+                    Nextion_driver_transmit_Now("t0.txt=\"ERROR\"");
+                    Nextion_driver_transmit_Now("t1.txt=\"eep0x03->0x05\"");
+                }
+                else
+                {
+                    Nextion_driver_transmit_Now("t0.txt=\"Done\"");
+                    Nextion_driver_transmit_Now("t1.txt=\"eep0x03->0x00\"");
+                }
+
+            break;         
+
+            case (uint8_t)EEPROM_status_OUT_OF_MEM:
+                Nextion_driver_transmit_Now("t1.txt=\"eep0x00->0x02\"");
+            break;  
+
+            default:
+                Nextion_driver_transmit_Now("t1.txt=\"eep0x00->0x01\"");
+            break;       
+        }
+
+        while(true){}
+    }
+}
+
+
+void service_wdt()
+{
+    static bool inited = false;
+
+    if(!inited)
+    {
+        WDT_INI();
+        inited = true;    
+    }
+    WDT_RESET();
+}
