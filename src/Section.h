@@ -19,6 +19,8 @@ public:
     // общие параметры для групповой работы секций
     uint16_t white_bright;
     uint16_t fito_bright;
+    uint16_t white_start;
+    uint16_t white_stop;
     uint16_t fito_start;
     uint16_t fito_stop;
     uint16_t pump_work;
@@ -71,6 +73,8 @@ public:
 
     void set_params(uint16_t _white_bright,
                     uint16_t _fito_bright,
+                    uint16_t _white_start,
+                    uint16_t _white_stop,
                     uint16_t _fito_start,
                     uint16_t _fito_stop,
                     uint16_t _pump_work,

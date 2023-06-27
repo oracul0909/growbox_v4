@@ -69,6 +69,14 @@ enum
     time_night,
     day_phase,
     time_format,
+    white_start_1,
+    white_start_2,
+    white_start_3,
+    white_start_4,
+    white_stop_1,
+    white_stop_2,
+    white_stop_3,
+    white_stop_4,
     fito_start_1,
     fito_start_2,
     fito_start_3,
@@ -96,7 +104,7 @@ enum
     // 0 - принудительно остановлен
     // 1 - включен (индивидуальная схема работы)
     // 2 - включен (групповая схема работы)
-    // 3 - включен постоянно / работа от датчика влажности
+    // 3 - включен постоянно
     white_wm_1,
     white_wm_2,
     white_wm_3,
@@ -105,6 +113,12 @@ enum
     fito_wm_2,
     fito_wm_3,
     fito_wm_4,
+
+    // режим работы индивидуальный(work_mode)
+    // 0 - принудительно остановлен
+    // 1 - включен по времени
+    // 2 - включен по датчику влажности
+    // 3 - включен постоянно
     pump_wm_1,
     pump_wm_2,
     pump_wm_3,

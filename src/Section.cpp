@@ -6,11 +6,12 @@ void Section::white_control(int work_mode)
 {
     switch (work_mode)
     {
-    case 0:
+    case 0:   //выкл
+        LED_white.set_bright(0);
         white_now = 0;
         break;
-    case 1:
-        if (data[time] >= data[time_day] && data[time] < data[time_night])
+    case 1:   //индивидуально
+        if (data[time] >= white_start && data[time] < white_stop)
         {
             white_now = white_bright;
         }
@@ -19,10 +20,10 @@ void Section::white_control(int work_mode)
             white_now = 0;
         }
         break;
-    case 2:
-        white_now = General->white_now;
+    case 2:   //по общему
+        white_now = General->white_bright;
         break;
-    case 3:
+    case 3:   //вкл всегда
         white_now = white_bright;
         break;
     }
@@ -34,11 +35,11 @@ void Section::fito_control(int work_mode)
 {
     switch (work_mode)
     {
-    case 0:
+    case 0:   //выкл
         LED_fito.set_bright(0);
         fito_now = 0;
         break;
-    case 1:
+    case 1:   //индивидуально
         if (data[time] >= fito_start && data[time] < fito_stop)
         {
             fito_now = fito_bright;
@@ -48,10 +49,10 @@ void Section::fito_control(int work_mode)
             fito_now = 0;
         }
         break;
-    case 2:
+    case 2:   //по общему
         fito_now = General->fito_bright;
         break;
-    case 3:
+    case 3:   //вкл всегда
         fito_now = fito_bright;
         break;
     }
@@ -66,13 +67,13 @@ void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t grou
     {
         switch (work_mode)
         {
-        case 0:
+        case 0:   //выкл
             pump_flag = false;
             break;
-        case 1:
+        case 1:   //по времени
             Pump.work_on_time(pump_work, pump_pause, data[time]);
             break;
-        case 2:
+        case 2:   //по датчику
             if (data[ground_hum] >= ground_hum_max)
             {
                 pump_flag = false;
@@ -82,7 +83,7 @@ void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t grou
                 pump_flag = true;
             }
             break;
-        case 3:
+        case 3:   //вкл всегда
             pump_flag = true;
             break;
         }
@@ -96,6 +97,8 @@ void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t grou
 
 void Section::set_params(uint16_t _white_bright,
                          uint16_t _fito_bright,
+                         uint16_t _white_start,
+                         uint16_t _white_stop,
                          uint16_t _fito_start,
                          uint16_t _fito_stop,
                          uint16_t _pump_work,
@@ -103,6 +106,8 @@ void Section::set_params(uint16_t _white_bright,
 {
     white_bright = _white_bright;
     fito_bright = _fito_bright;
+    white_start = white_start;
+    white_stop = white_stop;
     fito_start = _fito_start;
     fito_stop = _fito_stop;
     pump_work = _pump_work;
