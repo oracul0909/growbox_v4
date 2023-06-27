@@ -3,16 +3,50 @@
 #include "Services.h"
 #include "Arduino_FreeRTOS.h"
 
-void tasks_init()
+
+void Core_tasks_init()
 {
-    xTaskCreate(Task_1, "task1", 128, NULL, 1, NULL);
-    xTaskCreate(Task_2, "task2", 128, NULL, 1, NULL);
+   service_init_mem();
+    xTaskCreate(Task_service_data, "Task_service_data", 1024, NULL, 1, NULL);
+    xTaskCreate(Task_service_wdt, "Task_service_wdt", 64, NULL, 1, NULL);
 }
 
-void Task_1(void *pvParameters)
+void Machine_tasks_init()
+{
+    xTaskCreate(Task_service_day_phase, "Task_service_day_phase", 256, NULL, 1, NULL);
+    xTaskCreate(Task_service_sensors, "Task_service_sensors", 512, NULL, 1, NULL);
+    xTaskCreate(Task_service_devices_feedback, "Task_service_devices_feedback", 512, NULL, 1, NULL);
+    xTaskCreate(Task_service_climate_control, "Task_service_climate_control", 128, NULL, 1, NULL);
+    xTaskCreate(Task_service_section_control, "Task_service_section_control", 128, NULL, 1, NULL);
+}
+
+
+void Task_service_data(void *pvParameters)
 {
     (void)pvParameters;
-    pinMode(LED_BUILTIN, OUTPUT);
+
+
+    for (;;)
+    {
+        service_data_handler();
+        vTaskDelay(50 / portTICK_PERIOD_MS); 
+    }
+}
+
+void Task_service_wdt(void *pvParameters)
+{
+    (void)pvParameters;
+    for (;;)
+    {
+        service_wdt();
+        vTaskDelay(500 / portTICK_PERIOD_MS); 
+    }
+}
+
+
+void Task_service_day_phase(void *pvParameters)
+{
+    (void)pvParameters;
 
     for (;;)
     {
@@ -21,14 +55,50 @@ void Task_1(void *pvParameters)
     }
 }
 
-void Task_2(void *pvParameters)
+
+void Task_service_sensors(void *pvParameters)
 {
     (void)pvParameters;
 
     for (;;)
     {
-        int sensorValue = analogRead(A0);
-        Serial.println(sensorValue);
-        vTaskDelay(1); // one tick delay (15ms) in between reads for stability
+        service_sensors_run();
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
+    }
+}
+
+
+void Task_service_devices_feedback(void *pvParameters)
+{
+    (void)pvParameters;
+
+    for (;;)
+    {
+        service_devices_feedback();
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
+    }
+}
+
+
+void Task_service_climate_control(void *pvParameters)
+{
+    (void)pvParameters;
+
+    for (;;)
+    {
+        service_climate_control();
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
+    }
+}
+
+
+void Task_service_section_control(void *pvParameters)
+{
+    (void)pvParameters;
+
+    for (;;)
+    {
+        service_section_control();
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
     }
 }

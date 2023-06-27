@@ -3,7 +3,9 @@
 
 void WDT_INI()
 {
+  wdt_reset();
   wdt_enable(WDTO_4S);
+  wdt_reset();
 }
 
 void WDT_RESET()
