@@ -169,7 +169,7 @@ void service_data_handler()
 
     uint8_t f_data_enum =  Nextion_driver_receive();
 
-    if(f_writed_data!=0x00 | (f_data_enum!= time & f_data_enum !=0xff) | data[_EEprom_save]==1)
+    if(f_writed_data!=0x00 || (f_data_enum!= time & f_data_enum !=0xff) | data[_EEprom_save]==1)
     {
         data[_EEprom_save]==0;
         EEPROM_Save();
@@ -183,10 +183,12 @@ void service_data_handler()
 
 void service_init_mem()
 {
+  deb_print("proc->eep-0x00");
   EEPROM_status_t memStatus_t = EEPROM_Load();
+  deb_print(((uint8_t)memStatus_t, HEX));
     if(memStatus_t!= EEPROM_status_OK)
     {
-        service_data_handler();
+        Nextion_driver_init();
         delay(250);
         Nextion_driver_transmit_Now("page 18");
 
@@ -194,23 +196,33 @@ void service_init_mem()
         {
             case (uint8_t)EEPROM_status_ERR_CRC:
                 Nextion_driver_transmit_Now("t1.txt=\"eep0x00->0x05\"");
+                deb_print("ERROR");
+                deb_print("eep0x00->0x05");
             break;
 
             case (uint8_t)EEPROM_status_MAP_INVALID:
                 Nextion_driver_transmit_Now("t1.txt=\"eep0x00->0x04\"");
+                deb_print("ERROR");
+                deb_print("eep0x00->0x04");
                 delay(5000);
                 Nextion_driver_transmit_Now("t0.txt=\"proc->0x02\"");
+                deb_print("proc->0x02");
                 Nextion_driver_transmit_Now("t1.txt=\"eep0x02->0x03\"");
+                deb_print("eep0x02->0x03");
                 delay(5000);
                 if(EEPROM_Remap()!=EEPROM_status_OK)
                 {
                     Nextion_driver_transmit_Now("t0.txt=\"ERROR\"");
+                    deb_print("ERROR");
                     Nextion_driver_transmit_Now("t1.txt=\"eep0x03->0x05\"");
+                    deb_print("eep0x03->0x05");
                 }
                 else
                 {
                     Nextion_driver_transmit_Now("t0.txt=\"Done\"");
+                    deb_print("Done");
                     Nextion_driver_transmit_Now("t1.txt=\"eep0x03->0x00\"");
+                    deb_print("eep0x03->0x00");
                 }
 
             break;         

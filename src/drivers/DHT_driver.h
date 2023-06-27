@@ -4,6 +4,15 @@
 #include <Adafruit_Sensor.h>
 #include "DHT.h"
 
+
+#define DEBUG
+#if defined(DEBUG)
+    #define  deb_print(x) Serial.println(x)
+ #else
+    #define  deb_print(x) 
+ #endif
+
+
 class DHT_driver
 {
 private:
@@ -15,8 +24,11 @@ private:
 public:
     DHT_driver(uint8_t _pin)
     {
+        deb_print("DHT11 Start");
+        delay(150);
         pin = _pin;
         dht.begin();
+        deb_print("DHT11 END");
     }
 
     //Возвращает значение температуры датчика DHT

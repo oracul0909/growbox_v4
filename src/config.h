@@ -38,4 +38,11 @@
 //lock pin
 #define LOCK_PIN 27
 
+#define DEBUG
+#if defined(DEBUG)
+    #define  deb_print(x) Serial.println(x)
+ #else
+    #define  deb_print(x) 
+ #endif
+
 #endif

@@ -14,7 +14,7 @@ Modbus slave(_CFG_MODBUS_DRIVER_ADDR,_CFG_MODBUS_DRIVER_PORT,0);
 /// @brief  Инициализация драйвера
 void Modbus_Driver_Init()
 {
-    _CFG_MODBUS_DRIVER_PORT.begin(_CFG_MODBUS_DRIVER_BAUD, _CFG_MODBUS_DRIVER_STOPBIT);
+    _CFG_MODBUS_DRIVER_PORT.begin(_CFG_MODBUS_DRIVER_BAUD);
     slave.setID(_CFG_MODBUS_DRIVER_ADDR);
     slave.start();
 }
