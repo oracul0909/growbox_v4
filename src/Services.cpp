@@ -184,8 +184,8 @@ void service_data_handler()
 void service_init_mem()
 {
   deb_print("proc->eep-0x00");
+  delay(1000);
   EEPROM_status_t memStatus_t = EEPROM_Load();
-  deb_print(((uint8_t)memStatus_t, HEX));
     if(memStatus_t!= EEPROM_status_OK)
     {
         Nextion_driver_init();
@@ -207,8 +207,8 @@ void service_init_mem()
                 delay(5000);
                 Nextion_driver_transmit_Now("t0.txt=\"proc->0x02\"");
                 deb_print("proc->0x02");
-                Nextion_driver_transmit_Now("t1.txt=\"eep0x02->0x03\"");
-                deb_print("eep0x02->0x03");
+                Nextion_driver_transmit_Now("t1.txt=\"eep0x02->0x00\"");
+                deb_print("eep0x02->0x00");
                 delay(5000);
                 if(EEPROM_Remap()!=EEPROM_status_OK)
                 {
@@ -241,14 +241,13 @@ void service_init_mem()
 }
 
 
+void service_wdt_ini()
+{
+    WDT_INI();
+}
+
+
 void service_wdt()
 {
-    static bool inited = false;
-
-    if(!inited)
-    {
-        WDT_INI();
-        inited = true;    
-    }
     WDT_RESET();
 }

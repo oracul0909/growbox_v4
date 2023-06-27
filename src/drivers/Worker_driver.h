@@ -14,7 +14,7 @@ private:
 public:
     Worker_driver(uint8_t _pin)
     {
-        pin = _pin;
+       pin = _pin;
     }
 
     /// @brief цикл работы устройства

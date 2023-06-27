@@ -5,11 +5,11 @@
 #include "DHT.h"
 
 
-#define DEBUG
-#if defined(DEBUG)
-    #define  deb_print(x) Serial.println(x)
+//#define DEBUG3
+#ifdef DEBUG3
+    #define  deb3_print(x) Serial.println(x)
  #else
-    #define  deb_print(x) 
+    #define  deb3_print(x) 
  #endif
 
 
@@ -24,11 +24,10 @@ private:
 public:
     DHT_driver(uint8_t _pin)
     {
-        deb_print("DHT11 Start");
-        delay(150);
+        deb3_print("DHT11 Start");
         pin = _pin;
         dht.begin();
-        deb_print("DHT11 END");
+        deb3_print("DHT11 END");
     }
 
     //Возвращает значение температуры датчика DHT

@@ -1,5 +1,5 @@
 /*
-   @file WDT_driver.h - Главный фаил библиотеки watchdog avr
+   @file WDT_driver.h - Главный фаил библиотеки внешнего watchdog
    
     Реализует:
     - Запуск watch dog
@@ -14,6 +14,9 @@
 #ifndef WDT_DRIVER_H
 #define WDT_DRIVER_H
 #include "Arduino.h"
+
+#define _CFG_WDT_DRIVER_PORT 20
+
 
 /// @brief Инициализация WDT
 void WDT_INI();

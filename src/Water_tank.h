@@ -17,9 +17,9 @@ private:
 public:
     Water_tank(uint8_t _control_pin, uint8_t _low_pin, uint8_t _normal_pin)
     {
-        control_pin = _control_pin;
-        normal_pin = _normal_pin;
-        low_pin = _low_pin;
+       control_pin = _control_pin;
+       normal_pin = _normal_pin;
+       low_pin = _low_pin;
     }
 
     /// @brief Показывает состояние датчиков уровня воды в баке

@@ -35,6 +35,9 @@ void service_data_handler();
 /// @brief Одноразовый набор инструкций инициализации памяти
 void service_init_mem();
 
+
+///
+void service_wdt_ini();
 /// @brief Сервис взаимодействия с wdt
 void service_wdt();
 

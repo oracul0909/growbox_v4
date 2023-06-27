@@ -16,7 +16,7 @@
 #include "Arduino.h"
 
 
-#define _CFG_NEXTION_DRIVER_PORT Serial1
+#define _CFG_NEXTION_DRIVER_PORT Serial2
 #define _CFG_NEXTION_DRIVER_BAUD 9600
 #define _CFG_NEXTION_DRIVER_Base_msg "page0.va"
 #define _CFG_NEXTION_DRIVER_Base_msg_devider '&'

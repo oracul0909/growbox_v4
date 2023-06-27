@@ -18,6 +18,8 @@ void Machine_tasks_init();
     * Core Tasks
 */
 
+void RunTasksMan();
+
 /// @brief
 void Task_service_data(void *pvParameters);
 
