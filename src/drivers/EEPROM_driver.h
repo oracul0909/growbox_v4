@@ -49,7 +49,7 @@ enum
 };
 
 
-#define CFG_EEPROOM_INIT_CRC 0xf1F1
+#define CFG_EEPROOM_INIT_CRC 0xf1F4
 
 #if  defined(__AVR_ATmega2560__)
     #define CFG_EEPROM_SIZE_MAX EEPROM_MODEL_4KB_max

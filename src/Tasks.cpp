@@ -69,7 +69,7 @@ void Task_service_day_phase(void *pvParameters)
     for (;;)
     {
         deb_print("Run day task");
-        service_section_control();
+        service_day_phase();
         vTaskDelay(1000 / portTICK_PERIOD_MS); // wait for one second
     }
      vTaskDelete(NULL);

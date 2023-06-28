@@ -169,9 +169,10 @@ void service_data_handler()
 
     uint8_t f_data_enum =  Nextion_driver_receive();
 
+
     if(f_writed_data!=0x00 || (f_data_enum!= time & f_data_enum !=0xff) | data[_EEprom_save]==1)
     {
-        data[_EEprom_save]==0;
+        data[_EEprom_save]=0;
         EEPROM_Save();
     }
 

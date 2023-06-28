@@ -5,7 +5,7 @@
 #include "DHT.h"
 
 
-#define DEBUG3
+//#define DEBUG3
 #ifdef DEBUG3
     #define  deb3_print(x) Serial.println(x)
  #else
@@ -26,27 +26,28 @@ public:
     {
         deb3_print("DHT11 Start");
         pin = _pin;
+        dht = DHT(pin, DHT11);
         dht.begin();
         deb3_print("DHT11 END");
     }
 
     //Возвращает значение температуры датчика DHT
-    int8_t get_temperature(void);
+    int16_t get_temperature(void);
 
     //Возвращает значение температуры датчика DHT (адрес значения не имеет)
-    int8_t get_temperature(int addr);
+    int16_t get_temperature(int addr);
 
     //Возвращает значение температуры датчика DHT
-    int8_t get_temperature_middle(void);
+    int16_t get_temperature_middle(void);
 
     //Возвращает значение температуры датчика DHT
-    int8_t get_temperature_delta(void);
+    int16_t get_temperature_delta(void);
 
     //Возвращает значение влажности датчика DHT
-    uint8_t get_humidity(void);
+    int16_t get_humidity(void);
 
     //Возвращает значение влажности датчика DHT (адрес значения не имеет)
-    uint8_t get_humidity(int addr);
+    int16_t get_humidity(int addr);
 };
 
 #endif

@@ -98,7 +98,7 @@ enum
     pump_work_general,
     pump_pause_general,
     fan_inside_work,
-    fan_insode_pause,
+    fan_inside_pause,
 
     // режим работы индивидуальный(work_mode)
     // 0 - принудительно остановлен
