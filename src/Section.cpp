@@ -6,11 +6,11 @@ void Section::white_control(int work_mode)
 {
     switch (work_mode)
     {
-    case 0:   //выкл
+    case 0: // выкл
         LED_white.set_bright(0);
         white_now = 0;
         break;
-    case 1:   //индивидуально
+    case 1: // индивидуально
         if (data[time] >= white_start && data[time] < white_stop)
         {
             white_now = white_bright;
@@ -20,10 +20,10 @@ void Section::white_control(int work_mode)
             white_now = 0;
         }
         break;
-    case 2:   //по общему
+    case 2: // по общему
         white_now = General->white_bright;
         break;
-    case 3:   //вкл всегда
+    case 3: // вкл всегда
         white_now = white_bright;
         break;
     }
@@ -35,11 +35,11 @@ void Section::fito_control(int work_mode)
 {
     switch (work_mode)
     {
-    case 0:   //выкл
+    case 0: // выкл
         LED_fito.set_bright(0);
         fito_now = 0;
         break;
-    case 1:   //индивидуально
+    case 1: // индивидуально
         if (data[time] >= fito_start && data[time] < fito_stop)
         {
             fito_now = fito_bright;
@@ -49,10 +49,10 @@ void Section::fito_control(int work_mode)
             fito_now = 0;
         }
         break;
-    case 2:   //по общему
+    case 2: // по общему
         fito_now = General->fito_bright;
         break;
-    case 3:   //вкл всегда
+    case 3: // вкл всегда
         fito_now = fito_bright;
         break;
     }
@@ -62,37 +62,35 @@ void Section::fito_control(int work_mode)
 
 void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t ground_hum_max)
 {
-    bool pump_flag;
     if (data[water_tank_status] > 1)
     {
         switch (work_mode)
         {
-        case 0:   //выкл
-            pump_flag = false;
+        case 0: // выкл
+            Pump.run(false);
             break;
-        case 1:   //по времени
+        case 1: // по времени
             Pump.work_on_time(pump_work, pump_pause, data[time]);
             break;
-        case 2:   //по датчику
+        case 2: // по датчику
             if (data[ground_hum] >= ground_hum_max)
             {
-                pump_flag = false;
+                Pump.run(false);
             }
             else if (data[ground_hum] < ground_hum_min)
             {
-                pump_flag = true;
+                Pump.run(true);
             }
             break;
-        case 3:   //вкл всегда
-            pump_flag = true;
+        case 3: // вкл всегда
+            Pump.run(true);
             break;
         }
     }
     else
     {
-        pump_flag = false;
+        Pump.run(false);
     }
-    Pump.run(pump_flag);
 }
 
 void Section::set_params(uint16_t _white_bright,
