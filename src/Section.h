@@ -43,6 +43,11 @@ public:
         white_pin = _white_pin;
         fito_pin = _fito_pin;
         pump_pin = _pump_pin;
+
+        LED_white = LED_driver(white_pin);
+        LED_fito = LED_driver(fito_pin);
+        Pump = Worker_driver(pump_pin);
+
     }
 
     /// @brief Контроль работы дневного света

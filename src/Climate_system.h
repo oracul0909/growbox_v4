@@ -38,6 +38,13 @@ public:
         humidifier_pin = _humidifier_pin;
         fan_inside_pin = _fan_inside_pin;
         fan_outside_pin = _fan_outside_pin;
+
+        Heater = Worker_driver(heater_pin);
+        Cooler = Worker_driver(cooler_pin);
+        Humidifier = Worker_driver(humidifier_pin);
+        Fan_inside = Worker_driver(fan_inside_pin);
+        Fan_outside = Worker_driver(fan_outside_pin);
+
     }
 
     /// @brief Система охлаждения

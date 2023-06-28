@@ -11,7 +11,7 @@ public:
     Reed_switch_driver(uint8_t _pin)
     {
         pin = _pin;
-        pinMode(_pin, INPUT);
+        pinMode(_pin, INPUT_PULLUP);
     }
 
     bool get_state(void);

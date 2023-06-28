@@ -20,6 +20,10 @@ public:
        control_pin = _control_pin;
        normal_pin = _normal_pin;
        low_pin = _low_pin;
+
+        Control = Reed_switch_driver(control_pin);
+        Normal_switch = Reed_switch_driver(normal_pin);
+        Low_switch = Reed_switch_driver(low_pin);
     }
 
     /// @brief Показывает состояние датчиков уровня воды в баке
