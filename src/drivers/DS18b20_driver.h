@@ -14,8 +14,8 @@ class DS18B20_driver
 {
 private:
     uint8_t pin;
-    OneWire OneWire{pin};
-    DallasTemperature ds18b20{&OneWire};
+    OneWire _OneWire{pin};
+    DallasTemperature ds18b20{&_OneWire};
     DeviceAddress *sensorsUnique;
     uint8_t count_sensors;
     int temperature;
@@ -26,6 +26,8 @@ public:
     {
         deb2_print("18B20 Begin");
         pin = _pin;
+        _OneWire = OneWire(pin);
+        ds18b20 =  DallasTemperature(&_OneWire);
         ds18b20.begin();
         count_sensors = ds18b20.getDS18Count();
         for (int i = 0; i < count_sensors; i++)

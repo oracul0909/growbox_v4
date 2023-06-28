@@ -9,8 +9,7 @@ extern uint16_t data[array_length];
 
     uint8_t _nextion_driver_ring[] =
     {
-    // температура воздуха
-    temp_inside,
+ temp_inside,
     temp_inside_day,
     temp_inside_night,
     temp_required,
@@ -55,16 +54,32 @@ extern uint16_t data[array_length];
     fito_2_status,
     fito_3_status,
     fito_4_status,
-    water_tank_status,
     pump_1_status,
     pump_2_status,
     pump_3_status,
     pump_4_status,
+    water_tank_status,
+    lock_status,
+    heater_status,
+    cooler_status,
+    humidifier_status,
+    fan_inside_status,
+    fan_outside_status,
 
     // время и временные установки
     time,
     time_day,
     time_night,
+    day_phase,
+    time_format,
+    white_start_1,
+    white_start_2,
+    white_start_3,
+    white_start_4,
+    white_stop_1,
+    white_stop_2,
+    white_stop_3,
+    white_stop_4,
     fito_start_1,
     fito_start_2,
     fito_start_3,
@@ -85,12 +100,14 @@ extern uint16_t data[array_length];
     fito_stop_general,
     pump_work_general,
     pump_pause_general,
+    fan_inside_work,
+    fan_inside_pause,
 
     // режим работы индивидуальный(work_mode)
     // 0 - принудительно остановлен
     // 1 - включен (индивидуальная схема работы)
     // 2 - включен (групповая схема работы)
-    // 3 - включен постоянно / работа от датчика влажности
+    // 3 - включен постоянно
     white_wm_1,
     white_wm_2,
     white_wm_3,
@@ -99,6 +116,12 @@ extern uint16_t data[array_length];
     fito_wm_2,
     fito_wm_3,
     fito_wm_4,
+
+    // режим работы индивидуальный(work_mode)
+    // 0 - принудительно остановлен
+    // 1 - включен по времени
+    // 2 - включен по датчику влажности
+    // 3 - включен постоянно
     pump_wm_1,
     pump_wm_2,
     pump_wm_3,
@@ -111,6 +134,11 @@ extern uint16_t data[array_length];
     white_wm_general,
     fito_wm_general,
     pump_wm_general,
+
+    //уровень CO2
+    CO2_day,
+    CO2_night,
+
     };
 
 
@@ -169,6 +197,7 @@ void Nextion_driver_transmit_ring()
     static uint8_t Ring_pos = 0x00;
     _CFG_NEXTION_DRIVER_PORT.print(_CFG_NEXTION_DRIVER_Base_msg);
     _CFG_NEXTION_DRIVER_PORT.print(Ring_pos, DEC);
+    _CFG_NEXTION_DRIVER_PORT.print(_CFG_NEXTION_DRIVER_Base_msg2);
     _CFG_NEXTION_DRIVER_PORT.print('=');
     _CFG_NEXTION_DRIVER_PORT.print(String(data[_nextion_driver_ring[Ring_pos]]));
     _NextionDriver_endOfMsg();
