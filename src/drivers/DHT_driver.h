@@ -5,7 +5,7 @@
 #include "DHT.h"
 
 
-//#define DEBUG3
+#define DEBUG3
 #ifdef DEBUG3
     #define  deb3_print(x) Serial.println(x)
  #else
