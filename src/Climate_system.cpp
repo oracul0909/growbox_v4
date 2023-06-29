@@ -9,7 +9,7 @@ void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
     {
         timer_flag = !timer_flag;
     }
-    if (data[temp_inside] <= data[temp_outside])
+    if (data[temp_inside] <= data[temp_outside]-1)
     {
         if (timer_flag == true)
         {
@@ -34,7 +34,7 @@ void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
     {
         timer_flag = !timer_flag;
     }
-    if (data[temp_inside] >= data[temp_outside])
+    if (data[temp_inside] >= data[temp_outside]+1)
     {
         if (timer_flag == true)
         {
