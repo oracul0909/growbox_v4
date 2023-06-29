@@ -20,7 +20,7 @@ void Machine_tasks_init()
     xTaskCreate(Task_service_day_phase, "Task_service_day_phase", 256, NULL, 1, NULL);
     xTaskCreate(Task_service_sensors, "Task_service_sensors", 512, NULL, 1, NULL);
     xTaskCreate(Task_service_devices_feedback, "Task_service_devices_feedback", 512, NULL, 1, NULL);
-    xTaskCreate(Task_service_climate_control, "Task_service_climate_control", 128, NULL, 1, NULL);
+    xTaskCreate(Task_service_climate_control, "Task_service_climate_control", 256, NULL, 1, NULL);
     xTaskCreate(Task_service_section_control, "Task_service_section_control", 128, NULL, 1, NULL);
 }
 
@@ -127,7 +127,7 @@ void Task_service_section_control(void *pvParameters)
     {
         deb_print("Run section task");
         service_section_control();
-        vTaskDelay(1000 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
+        vTaskDelay(1500 / portTICK_PERIOD_MS); // one tick delay (15ms) in between reads for stability
     }
      vTaskDelete(NULL);
 }

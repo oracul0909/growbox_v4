@@ -199,7 +199,42 @@ void Nextion_driver_transmit_ring()
     _CFG_NEXTION_DRIVER_PORT.print(Ring_pos, DEC);
     _CFG_NEXTION_DRIVER_PORT.print(_CFG_NEXTION_DRIVER_Base_msg2);
     _CFG_NEXTION_DRIVER_PORT.print('=');
-    _CFG_NEXTION_DRIVER_PORT.print(String(data[_nextion_driver_ring[Ring_pos]]));
+
+    switch(Ring_pos)
+    {
+        case temp_inside:
+            _CFG_NEXTION_DRIVER_PORT.print(String((int16_t)data[_nextion_driver_ring[Ring_pos]]));
+        break;
+
+        case temp_inside_day:
+            _CFG_NEXTION_DRIVER_PORT.print(String((int16_t)data[_nextion_driver_ring[Ring_pos]]));
+        break;
+
+        case temp_inside_night:
+            _CFG_NEXTION_DRIVER_PORT.print(String((int16_t)data[_nextion_driver_ring[Ring_pos]]));
+        break;
+
+        case temp_required:
+            _CFG_NEXTION_DRIVER_PORT.print(String((int16_t)data[_nextion_driver_ring[Ring_pos]]));
+        break;
+
+        case temp_outside:
+            _CFG_NEXTION_DRIVER_PORT.print(String((int16_t)data[_nextion_driver_ring[Ring_pos]]));
+        break;
+
+        default:
+            _CFG_NEXTION_DRIVER_PORT.print(String(data[_nextion_driver_ring[Ring_pos]]));
+        break;
+    }
+
+
+
+    
+
+
+
+
+
     _NextionDriver_endOfMsg();
     Ring_pos++;
     if(Ring_pos>= _Nextion_driver_ring_MaxCount)Ring_pos=0x00;

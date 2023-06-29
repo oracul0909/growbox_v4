@@ -17,16 +17,16 @@ private:
 
 public:
     // общие параметры для групповой работы секций
-    uint16_t white_bright;
-    uint16_t fito_bright;
-    uint16_t white_start;
-    uint16_t white_stop;
-    uint16_t fito_start;
-    uint16_t fito_stop;
-    uint16_t pump_work;
-    uint16_t pump_pause;
-    uint16_t white_now;
-    uint16_t fito_now;
+    int16_t white_bright;
+    int16_t fito_bright;
+    int16_t white_start;
+    int16_t white_stop;
+    int16_t fito_start;
+    int16_t fito_stop;
+    int16_t pump_work;
+    int16_t pump_pause;
+    int16_t white_now;
+    int16_t fito_now;
     bool pump_now;
 
     // объекты ламп и насоса секции
@@ -47,7 +47,6 @@ public:
         LED_white = LED_driver(white_pin);
         LED_fito = LED_driver(fito_pin);
         Pump = Worker_driver(pump_pin);
-
     }
 
     /// @brief Контроль работы дневного света
@@ -76,14 +75,14 @@ public:
     /// @param ground_hum_max Максимальный уровень влажности (%)
     void pump_control(int work_mode, uint16_t ground_hum_min, uint16_t ground_hum_max);
 
-    void set_params(uint16_t _white_bright,
-                    uint16_t _fito_bright,
-                    uint16_t _white_start,
-                    uint16_t _white_stop,
-                    uint16_t _fito_start,
-                    uint16_t _fito_stop,
-                    uint16_t _pump_work,
-                    uint16_t _pump_pause);
+    void set_params(int16_t _white_bright,
+                    int16_t _fito_bright,
+                    int16_t _white_start,
+                    int16_t _white_stop,
+                    int16_t _fito_start,
+                    int16_t _fito_stop,
+                    int16_t _pump_work,
+                    int16_t _pump_pause);
 
     void get_devices_status();
 };

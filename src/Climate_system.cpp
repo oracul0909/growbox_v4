@@ -1,34 +1,9 @@
 #include "Climate_system.h"
 #include "Data.h"
 
-extern uint16_t data[array_length];
+extern int16_t data[array_length];
 
 void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
-{
-    if (time_new <= data[time])
-    {
-        timer_flag = !timer_flag;
-    }
-    if (data[temp_inside] >= data[temp_outside])
-    {
-        if (timer_flag == true)
-        {
-            time_new = time + work_time;
-            mask = B10010;
-        }
-        else if (timer_flag == false)
-        {
-            time_new = time + pause_time;
-            mask = B00010;
-        }
-    }
-    else
-    {
-        mask = B00001;
-    }
-}
-
-void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
 {
     if (time_new <= data[time])
     {
@@ -38,30 +13,55 @@ void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
     {
         if (timer_flag == true)
         {
-            time_new = time + work_time;
-            mask = B10010;
+            time_new = data[time] + work_time;
+            mask = (Cooler_mask|Fan_inside_mask);
         }
         else if (timer_flag == false)
         {
-            time_new = time + pause_time;
-            mask = B00010;
+            time_new = data[time] + pause_time;
+            mask = Fan_inside_mask;
         }
     }
     else
     {
-        mask = B00001;
+        mask = Fan_outside_mask;
+    }
+}
+
+void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
+{
+    if (time_new <= data[time])
+    {
+        timer_flag = !timer_flag;
+    }
+    if (data[temp_inside] >= data[temp_outside])
+    {
+        if (timer_flag == true)
+        {
+            time_new = data[time] + work_time;
+            mask = (Heater_mask|Fan_inside_mask);
+        }
+        else if (timer_flag == false)
+        {
+            time_new = data[time] + pause_time;
+            mask = Fan_inside_mask;
+        }
+    }
+    else
+    {
+        mask = Fan_outside_mask;
     }
 }
 
 void Climate_system::humidify()
 {
-    if (data[hum_inside] <= data[hum_outside])
+    if (data[hum_inside] >= data[hum_outside])
     {
-        mask = B00100;
+        mask = Humidifier_mask;
     }
     else
     {
-        mask = B00001;
+        mask = Fan_outside_mask;
     }
 }
 
@@ -71,44 +71,123 @@ void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
     {
         timer_flag = !timer_flag;
     }
-    if (data[hum_inside] >= data[hum_outside])
+    if (data[hum_inside] <= data[hum_outside])
     {
         if (timer_flag == true)
         {
-            time_new = time + freeze_time;
-            mask = B01000;
+            time_new = data[time] + freeze_time;
+            mask = Cooler_mask;
         }
         else if (timer_flag == false)
         {
-            time_new = time + defrost_time;
-            mask = B10000;
+            time_new = data[time] + defrost_time;
+            mask = Heater_mask;
         }
     }
     else
     {
-        mask = B00001;
+        mask = Fan_outside_mask;
     }
 }
 
 void Climate_system::stop()
 {
-    mask = B00000;
+    mask = None_mask;
 }
 
 void Climate_system::system_run()
-{
-    Fan_outside.run(mask & (1 << 0));
-    Fan_inside.run(mask & (1 << 1));
-    Humidifier.run(mask & (1 << 2));
-    Cooler.run(mask & (1 << 3));
-    Heater.run(mask & (1 << 4));
+{   
+    if((mask & ((byte)Fan_outside_mask))>0)
+    {
+        Fan_outside.run(true);
+    }
+    else
+    {
+        Fan_outside.run(false);
+    }
+
+    if((mask & ((byte)Fan_inside_mask))>0)
+    {
+        Fan_inside.run(true);
+    }
+    else
+    {
+        Fan_inside.run(false);
+    }
+
+    if((mask & ((byte)Humidifier_mask))>0)
+    {
+        Humidifier.run(true);
+    }
+    else
+    {
+        Humidifier.run(false);
+    }
+
+    if((mask & ((byte)Cooler_mask))>0)
+    {
+        Cooler.run(true);
+    }
+    else
+    {
+        Cooler.run(false);
+    }
+
+    if((mask & ((byte)Heater_mask))>0)
+    {
+        Heater.run(true);
+    }
+    else
+    {
+        Heater.run(false);
+    }
 }
 
 void Climate_system::devices_status()
 {
-    data[heater_status] = (mask & (1 << 4));
-    data[cooler_status] = (mask & (1 << 3));
-    data[humidifier_status] = (mask & (1 << 2));
-    data[fan_inside_status] = (mask & (1 << 1));
-    data[fan_outside_status] = (mask & (1 << 0));
+
+    if((mask & ((byte)Fan_outside_mask))>0)
+    {
+        data[fan_outside_status] = 0x01;
+    }
+    else
+    {
+        data[fan_outside_status] = 0x00;
+    }
+
+    if((mask & ((byte)Fan_inside_mask))>0)
+    {
+        data[fan_inside_status] = 0x01;
+    }
+    else
+    {
+        data[fan_inside_status] = 0x00;
+    }
+
+    if((mask & ((byte)Humidifier_mask))>0)
+    {
+        data[humidifier_status] = 0x01;
+    }
+    else
+    {
+        data[humidifier_status] = 0x00;
+    }
+
+    if((mask & ((byte)Cooler_mask))>0)
+    {
+        data[cooler_status] = 0x01;
+    }
+    else
+    {
+        data[cooler_status] = 0x00;
+    }
+
+    if((mask & ((byte)Heater_mask))>0)
+    {
+        data[heater_status] = 0x01;
+    }
+    else
+    {
+        data[heater_status] = 0x00;
+    }
 }

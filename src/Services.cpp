@@ -1,13 +1,13 @@
 #include "Services.h"
 
-extern uint16_t data[array_length];
+extern int16_t data[array_length];
 
 // #define data(x) data[x]
 
 CSMS_driver CSMS(CSMS_PIN);
 DHT_driver DHT_inside(DHT_INSIDE_PIN);
 DHT_driver DHT_outside(DHT_OUTSIDE_PIN);
-DS18B20_driver DS(DS18B20_PIN);
+DHT_driver DS(DS18B20_PIN);
 
 Section Section_general;
 Section Section_1(&Section_general, WHITE_PIN_1, FITO_PIN_1, PUMP_PIN_1);

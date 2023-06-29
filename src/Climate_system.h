@@ -3,6 +3,15 @@
 
 #include "drivers/Worker_driver.h"
 
+#define None_mask 0x00
+#define Fan_outside_mask    1U
+#define Fan_inside_mask     2U
+#define Humidifier_mask     4U
+#define Cooler_mask         8U
+#define Heater_mask         16U
+
+
+
 class Climate_system
 {
 private:
@@ -11,7 +20,7 @@ private:
     uint8_t humidifier_pin;
     uint8_t fan_inside_pin;
     uint8_t fan_outside_pin;
-    uint16_t time_new;
+    int16_t time_new;
     bool timer_flag;
     bool worker_flag;
 

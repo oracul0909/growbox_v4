@@ -3,7 +3,7 @@
 
 #include "DallasTemperature.h"
 
-//#define DEBUG2
+#define DEBUG2
 #ifdef DEBUG2
     #define  deb2_print(x) Serial.println(x)
  #else
@@ -32,9 +32,10 @@ public:
         count_sensors = ds18b20.getDS18Count();
         for (int i = 0; i < count_sensors; i++)
         {
-            ds18b20.getAddress(sensorsUnique[i], i);
+           // ds18b20.getAddress(sensorsUnique[i], i);
         }
         deb2_print("18B20 END");
+        
     }
 
     //Возвращает значение температуры датчика DS18b20 с 0 индексом

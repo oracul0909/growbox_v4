@@ -15,6 +15,7 @@ public:
     Worker_driver(uint8_t _pin)
     {
        pin = _pin;
+       pinMode(pin, OUTPUT);
     }
 
     /// @brief цикл работы устройства
