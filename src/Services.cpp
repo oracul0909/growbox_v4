@@ -37,7 +37,7 @@ void service_day_phase()
 
 void service_sensors_run()
 {
-    data[temp_inside] = DS.get_temperature_middle();
+    data[temp_inside] = DS.get_temperature();
     data[temp_outside] = DHT_outside.get_temperature();
     data[hum_inside] = DHT_inside.get_humidity();
     data[hum_outside] = DHT_outside.get_humidity();
@@ -67,25 +67,25 @@ void service_climate_control()
 {
     if (data[temp_inside] > (data[temp_required] + 1))
     {
-        Climate.cool_down(10, 5);
+        Climate.cool_down(1, 0);
     }
-    else if (data[temp_inside] < (data[temp_required] - 1))
+    if (data[temp_inside] < (data[temp_required] - 1))
     {
-        Climate.warm_up(5, 5);
+        Climate.warm_up(1, 0);
     }
-    else
+    if(data[temp_inside] == data[temp_required])
     {
         if (data[hum_inside] > (data[hum_required] + 1))
         {
-            Climate.drain(10, 5);
+            Climate.drain(5, 2);
         }
-        else if (data[hum_inside] < (data[hum_required] - 1))
+        if (data[hum_inside] < (data[hum_required] - 1))
         {
             Climate.humidify();
         }
-        else
+        if (data[hum_inside] == (data[hum_required]))
         {
-            Climate.stop();
+            Climate.mix();
         }
     }
     Climate.system_run();
