@@ -8,14 +8,14 @@
 #define CSMS_PIN A4
 
 //section devices pin
-#define WHITE_PIN_1 11
-#define WHITE_PIN_2 9
-#define WHITE_PIN_3 7
+#define WHITE_PIN_1 10
+#define WHITE_PIN_2 7
+#define WHITE_PIN_3 9
 #define WHITE_PIN_4 5
 
-#define FITO_PIN_1 10
-#define FITO_PIN_2 8
-#define FITO_PIN_3 6
+#define FITO_PIN_1 11
+#define FITO_PIN_2 6
+#define FITO_PIN_3 8
 #define FITO_PIN_4 4
 
 #define PUMP_PIN_1 A0

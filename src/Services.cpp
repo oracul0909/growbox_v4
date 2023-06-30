@@ -67,11 +67,11 @@ void service_climate_control()
 {
     if (data[temp_inside] > (data[temp_required] + 1))
     {
-        Climate.cool_down(1, 0);
+        Climate.cool_down(5, 2);
     }
     if (data[temp_inside] < (data[temp_required] - 1))
     {
-        Climate.warm_up(1, 0);
+        Climate.warm_up(2, 2);
     }
     if(data[temp_inside] == data[temp_required])
     {
