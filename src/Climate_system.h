@@ -10,6 +10,14 @@
 #define Cooler_mask         8U
 #define Heater_mask         16U
 
+#define Climate_delta_coeff 1
+
+typedef enum _climate_operation_t
+{
+ None,
+ heating,
+ cooling
+};
 
 
 class Climate_system
@@ -21,6 +29,11 @@ private:
     uint8_t fan_inside_pin;
     uint8_t fan_outside_pin;
     int16_t time_new;
+
+    int16_t Start_delta;
+    _climate_operation_t Last_operation;
+    _climate_operation_t force_operation;
+
     bool timer_flag;
     bool worker_flag;
 

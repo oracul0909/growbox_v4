@@ -5,11 +5,23 @@ extern int16_t data[array_length];
 
 void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
 {
+    if(Last_operation!= cooling)
+    {
+        Start_delta = data[temp_inside] - data[temp_outside];
+        force_operation = None;
+    }
+    Last_operation = cooling;
+    if(Start_delta + Climate_delta_coeff >= (data[temp_inside] - data[temp_outside]))
+    {
+        force_operation = cooling;
+    }
+
+
     if (time_new <= data[time])
     {
         timer_flag = !timer_flag;
     }
-    if (data[temp_inside] <= data[temp_outside])
+    if ((data[temp_inside] <= data[temp_outside]) | force_operation == cooling)
     {
         if (timer_flag == true)
         {
@@ -30,11 +42,23 @@ void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
 
 void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
 {
+    if(Last_operation!= heating)
+    {
+        Start_delta = data[temp_outside] - data[temp_inside];
+        force_operation = None;
+    }
+    Last_operation = heating;
+
+    if(Start_delta + Climate_delta_coeff >= (data[temp_outside] - data[temp_inside]))
+    {
+        force_operation = heating;
+    }
+
     if (time_new <= data[time])
     {
         timer_flag = !timer_flag;
     }
-    if (data[temp_inside] >= data[temp_outside])
+    if ((data[temp_inside] >= data[temp_outside]) | force_operation == heating)
     {
         if (timer_flag == true)
         {
