@@ -180,6 +180,10 @@ uint8_t Nextion_driver_receive()
         {
             int dest = messages[0].toInt();
             int val = messages[1].toInt();
+            if(((dest==white_wm_general)|| (dest==white_wm_general) || (dest==fito_wm_general) || (dest==pump_wm_general)) & val==2)
+            val=3;
+
+            
             _DATA_ADR[dest] = val;
             return (uint8_t)dest;
         }

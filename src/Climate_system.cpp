@@ -11,7 +11,7 @@ void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
         force_operation = None;
     }
     Last_operation = cooling;
-    if(Start_delta + Climate_delta_coeff >= (data[temp_inside] - data[temp_outside]))
+    if(Start_delta <= (data[temp_inside] - data[temp_outside])- Climate_delta_coeff)
     {
         force_operation = cooling;
     }
@@ -37,6 +37,7 @@ void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
     else
     {
         mask = Fan_outside_mask;
+        force_operation = None;
     }
 }
 
@@ -49,7 +50,7 @@ void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
     }
     Last_operation = heating;
 
-    if(Start_delta + Climate_delta_coeff >= (data[temp_outside] - data[temp_inside]))
+    if(Start_delta  <= (data[temp_outside] - data[temp_inside]) - Climate_delta_coeff)
     {
         force_operation = heating;
     }
@@ -87,6 +88,7 @@ void Climate_system::humidify()
     {
         mask = Fan_outside_mask;
     }
+    force_operation = None;
 }
 
 void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
@@ -112,6 +114,7 @@ void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
     {
         mask = Fan_outside_mask;
     }
+    force_operation = None;
 }
 
 void Climate_system::mix()
@@ -130,6 +133,7 @@ void Climate_system::mix()
         time_new = data[time] + data[fan_inside_pause];
         mask = None_mask;
     }
+    force_operation = None;
 }
 
 void Climate_system::stop()

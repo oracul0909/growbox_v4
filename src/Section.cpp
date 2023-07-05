@@ -2,7 +2,7 @@
 
 extern int16_t data[array_length];
 
-void Section::white_control(int work_mode)
+uint8_t Section::white_control(int work_mode, int16_t _GeneralWhite)
 {
     switch (work_mode)
     {
@@ -10,8 +10,11 @@ void Section::white_control(int work_mode)
         LED_white.set_bright(0);
         white_now = 0;
         break;
-    case 2: // индивидуально
-        if (data[time] >= white_start && data[time] < white_stop)
+    case 3: // вкл всегда
+        white_now = white_bright;
+    break;
+    case 1: // индивидуально
+        if ((data[time] >= white_start) & (data[time] < white_stop))
         {
             white_now = white_bright;
         }
@@ -20,18 +23,20 @@ void Section::white_control(int work_mode)
             white_now = 0;
         }
         break;
-    case 3: // по общему
-        white_now = General->white_bright;
-        break;
-    case 1: // вкл всегда
-        white_now = white_bright;
+    case 2: // по общему
+        white_now = _GeneralWhite;
         break;
     }
-    LED_white.set_bright(white_now);
-    LED_white.change_bright();
+    if(white_pin != 0xff)
+    {
+        LED_white.set_bright(white_now);
+        LED_white.change_bright();
+    }
+
+    return white_now;
 }
 
-void Section::fito_control(int work_mode)
+uint8_t Section::fito_control(int work_mode, int16_t _GeneralFito)
 {
     switch (work_mode)
     {
@@ -39,8 +44,12 @@ void Section::fito_control(int work_mode)
         LED_fito.set_bright(0);
         fito_now = 0;
         break;
-    case 2: // индивидуально
-        if (data[time] >= fito_start && data[time] < fito_stop)
+
+    case 3: // вкл всегда
+        fito_now = fito_bright;
+    break;
+    case 1: // индивидуально
+        if ((data[time] >= fito_start) & (data[time] < fito_stop))
         {
             fito_now = fito_bright;
         }
@@ -49,18 +58,20 @@ void Section::fito_control(int work_mode)
             fito_now = 0;
         }
         break;
-    case 3: // по общему
-        fito_now = General->fito_bright;
+    case 2: // по общему
+        fito_now = _GeneralFito;
         break;
-    case 1: // вкл всегда
-        fito_now = fito_bright;
-        break;
+
     }
-    LED_fito.set_bright(fito_now);
-    LED_fito.change_bright();
+    if(fito_pin != 0xff)
+    {
+        LED_fito.set_bright(fito_now);
+        LED_fito.change_bright();
+    }
+    return fito_now;
 }
 
-void Section::pump_control(int work_mode, uint16_t ground_hum_min, uint16_t ground_hum_max)
+void Section::pump_control(int work_mode, int16_t ground_hum_min, int16_t ground_hum_max)
 {
     if (data[water_tank_status] > 1)
     {
@@ -104,8 +115,8 @@ void Section::set_params(int16_t _white_bright,
 {
     white_bright = _white_bright;
     fito_bright = _fito_bright;
-    white_start = white_start;
-    white_stop = white_stop;
+    white_start = _white_start;
+    white_stop = _white_stop;
     fito_start = _fito_start;
     fito_stop = _fito_stop;
     pump_work = _pump_work;

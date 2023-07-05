@@ -12,12 +12,12 @@
 
 #define Climate_delta_coeff 1
 
-typedef enum _climate_operation_t
+typedef enum 
 {
  None,
  heating,
  cooling
-};
+}_climate_operation_t;
 
 
 class Climate_system

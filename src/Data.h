@@ -102,9 +102,9 @@ enum
 
     // режим работы индивидуальный(work_mode)
     // 0 - принудительно остановлен
-    // 1 - включен (индивидуальная схема работы)
-    // 2 - включен (групповая схема работы)
-    // 3 - включен постоянно
+    // 3 - включен (всегда)
+    // 1 - включен (индивидуально)
+    // 2 - включен группой
     white_wm_1,
     white_wm_2,
     white_wm_3,
@@ -142,6 +142,16 @@ enum
     // длина массива
     array_length
 };
+
+
+enum
+{
+    _enum_Temp_inside_top_status,
+    _enum_Temp_inside_botom_status,
+    _enum_Temp_outside_top_status,
+    _enum_dat_internal_count
+};
+
 
 #endif
 

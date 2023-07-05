@@ -10,20 +10,20 @@ void Worker_driver::work_on_time(uint16_t work, uint16_t pause, uint16_t time)
     {
         time_new = time + work;
         worker_flag = true;
-        digitalWrite(pin, worker_flag);
+         if(pin != 0xff)digitalWrite(pin, worker_flag);
     }
     else if (timer_flag == false && worker_flag == true)
     {
         time_new = time + pause;
         worker_flag = false;
-        digitalWrite(pin, worker_flag);
+         if(pin != 0xff)digitalWrite(pin, worker_flag);
     }
 }
 
 void Worker_driver::run(bool flag)
 {
     worker_flag = flag;
-    digitalWrite(pin, worker_flag);
+   if(pin != 0xff)digitalWrite(pin, worker_flag);
 }
 
 bool Worker_driver::get_state()

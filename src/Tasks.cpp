@@ -48,12 +48,10 @@ void Task_service_wdt(void *pvParameters)
     (void)pvParameters;
 
     deb_print("Start wdt task");
-    service_wdt_ini();
-    
     for (;;)
     {
         deb_print("Run wdt task");
-        service_wdt();
+        TimeToReset();
        vTaskDelay(500 / portTICK_PERIOD_MS); 
     }
     

@@ -41,4 +41,6 @@ void service_wdt_ini();
 /// @brief Сервис взаимодействия с wdt
 void service_wdt();
 
+
+void TimeToReset();
 #endif

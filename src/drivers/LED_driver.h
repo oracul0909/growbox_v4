@@ -9,7 +9,7 @@ private:
     uint8_t pin;
     uint8_t intencity_index = 0;
     uint8_t intencity_index_new = 0;
-    uint8_t intencity_steps[11] {0, 30, 50, 80, 100, 120, 150, 180, 200, 230, 255};
+    uint8_t intencity_steps[11] {0, 80, 100, 120, 140, 160, 180, 200, 220, 255, 255};
 
 public:
     LED_driver(uint8_t _pin)

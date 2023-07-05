@@ -15,6 +15,7 @@ public:
     Worker_driver(uint8_t _pin)
     {
        pin = _pin;
+       if(pin != 0xff)
        pinMode(pin, OUTPUT);
     }
 
