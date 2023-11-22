@@ -26,6 +26,7 @@ void Machine_tasks_init()
 
 void RunTasksMan()
 {
+    WDT_INI();
     vTaskStartScheduler();
 }
 
@@ -51,7 +52,7 @@ void Task_service_wdt(void *pvParameters)
     for (;;)
     {
         deb_print("Run wdt task");
-        TimeToReset();
+       // TimeToReset();
        vTaskDelay(500 / portTICK_PERIOD_MS); 
     }
     

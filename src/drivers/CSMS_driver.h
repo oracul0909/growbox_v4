@@ -7,8 +7,7 @@ class CSMS_driver
 {
 private:
     uint8_t pin;
-    int moisture_min = 5000;
-    int moisture_max = 0;
+
 
 public:
     CSMS_driver(uint8_t _pin)
@@ -18,6 +17,10 @@ public:
     }
 
     uint8_t get_moisture_middle(uint8_t tick);
+
+    int16_t moisture_min = 5000;
+    int16_t moisture_max = 0;
+    uint8_t changed = 0x00;
 };
 
 #endif

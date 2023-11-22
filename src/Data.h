@@ -149,6 +149,7 @@ enum
     _enum_Temp_inside_top_status,
     _enum_Temp_inside_botom_status,
     _enum_Temp_outside_top_status,
+    _enum_Temp_inside_top_temp,
     _enum_dat_internal_count
 };
 

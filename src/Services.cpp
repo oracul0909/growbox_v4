@@ -44,6 +44,8 @@ void service_sensors_run()
     data[ground_hum] = CSMS.get_moisture_middle(5);
     data[water_tank_status] = Tank.get_state();
     data[lock_status] = Lock.get_state();
+    InternalData[_enum_Temp_inside_top_temp] = DHT_inside.get_temperature();
+
 
 }
 
@@ -67,25 +69,26 @@ void service_devices_feedback()
     InternalData[_enum_Temp_inside_botom_status] = DS.Status;
     InternalData[_enum_Temp_outside_top_status] = DHT_outside.Status;
 
-    if(InternalData[_enum_Temp_inside_top_status]==0xff | InternalData[_enum_Temp_outside_top_status]==0xff )
+    if(InternalData[_enum_Temp_inside_top_status]==0xff || InternalData[_enum_Temp_outside_top_status]==0xff )
     WDT_AUTORESET();
 }
 
 void service_climate_control()
 {
-    if (data[temp_inside] > (data[temp_required] + 1))
+    if (data[temp_inside] > (data[temp_required] - 1))
     {
-        Climate.cool_down(5, 1);
+        Climate.cool_down(5, 5);
     }
-    if (data[temp_inside] < (data[temp_required] - 1))
+    else
+    if (data[temp_inside] < (data[temp_required] + 1))
     {
-        Climate.warm_up(3, 1);
+        Climate.warm_up(3, 3);
     }
-    if(data[temp_inside] == data[temp_required])
+    else
     {
         if (data[hum_inside] > (data[hum_required] + 1))
         {
-            Climate.drain(5, 1);
+            Climate.drain(3, 3);
         }
         if (data[hum_inside] < (data[hum_required] - 1))
         {
@@ -93,7 +96,7 @@ void service_climate_control()
         }
         if (data[hum_inside] == (data[hum_required]))
         {
-            Climate.mix();
+           // Climate.mix();
         }
     }
     Climate.system_run();
@@ -178,7 +181,7 @@ void service_data_handler()
     uint8_t f_data_enum =  Nextion_driver_receive();
 
 
-    if(f_writed_data!=0x00 || ((f_data_enum!= time) & (f_data_enum !=0xff)) | data[_EEprom_save]==1)
+    if(f_writed_data!=0x00 || ((f_data_enum!= time) & (f_data_enum !=0xff)) || data[_EEprom_save]==1)
     {
         data[_EEprom_save]=0;
         EEPROM_Save();
@@ -264,7 +267,7 @@ void service_wdt()
 void TimeToReset()
 {
     static int16_t last_time;
-        if((last_time>60) & data[time]==0)
+        if((last_time>60) && data[time]==0)
            service_wdt(); 
     last_time = data[time];
 }

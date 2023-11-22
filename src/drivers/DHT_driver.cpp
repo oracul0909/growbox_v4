@@ -10,6 +10,7 @@ int16_t DHT_driver::get_temperature()
     #else
         temperature = (int16_t)dht.readTemperature();
         crcCheck(); 
+        if(temperature<0)temperature=0;
         return temperature;
     #endif
 }

@@ -15,7 +15,7 @@
 #define WDT_DRIVER_H
 #include "Arduino.h"
 
-#define _CFG_WDT_DRIVER_PORT 20
+#define _CFG_WDT_DRIVER_PORT A4
 
 
 /// @brief Инициализация WDT
