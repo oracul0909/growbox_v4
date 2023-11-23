@@ -75,22 +75,22 @@ void service_devices_feedback()
 
 void service_climate_control()
 {
-    if (data[temp_inside] > (data[temp_required] - 1))
+    if (data[temp_inside] > (data[temp_required]))
     {
         Climate.cool_down(5, 5);
     }
     else
-    if (data[temp_inside] < (data[temp_required] + 1))
+    if (data[temp_inside] < (data[temp_required]))
     {
         Climate.warm_up(3, 3);
     }
     else
     {
-        if (data[hum_inside] > (data[hum_required] + 1))
+        if (data[hum_inside] > (data[hum_required]))
         {
             Climate.drain(3, 3);
         }
-        if (data[hum_inside] < (data[hum_required] - 1))
+        if (data[hum_inside] < (data[hum_required]))
         {
             Climate.humidify();
         }

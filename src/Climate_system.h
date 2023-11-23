@@ -10,7 +10,7 @@
 #define Cooler_mask         8U
 #define Heater_mask         16U
 
-#define Climate_delta_coeff 1
+#define Climate_delta_coeff 2
 
 typedef enum 
 {
