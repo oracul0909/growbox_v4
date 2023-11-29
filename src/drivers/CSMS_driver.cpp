@@ -21,7 +21,8 @@ uint8_t CSMS_driver::get_moisture_middle(uint8_t tick)
     if (moisture_temp > moisture_max)
     {
         moisture_max = moisture_temp;
-    }
-    uint8_t ground_humidity = 100 - constrain(map(moisture_temp, moisture_min, moisture_max, 0, 100), 0, 100);
-    return ground_humidity;
+    } 
+    uint16_t ground_humidity = 1000 - constrain(map(moisture_temp, moisture_min, moisture_max, 0, 1000), 0, 1000);
+    mois += (ground_humidity - mois) / 10;
+    return uint8_t(mois/10);
 }

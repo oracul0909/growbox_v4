@@ -26,10 +26,16 @@ int16_t DHT_driver::get_temperature(int addr)
     #endif
 }
 
+
 int16_t DHT_driver::get_temperature_middle()
 {
-    return get_temperature();
+    
+    int32_t now_temp = get_temperature()*100;
+    Temperature += (now_temp - Temperature) / 10;
+    return int16_t(Temperature/100);
 }
+
+
 
 int16_t DHT_driver::get_temperature_delta()
 {
@@ -49,6 +55,13 @@ int16_t DHT_driver::get_humidity()
  #endif
 }
 
+int16_t DHT_driver::get_humidity_middle()
+{
+    
+    int32_t now_hum = get_humidity()*100;
+    HUM += (now_hum - HUM) / 10;
+    return int16_t(HUM/100);
+}
 
 int16_t DHT_driver::get_humidity(int addr)
 {

@@ -28,7 +28,9 @@ private:
     uint8_t humidifier_pin;
     uint8_t fan_inside_pin;
     uint8_t fan_outside_pin;
-    int16_t time_new;
+    int16_t time_new_for_cool;
+    int16_t time_new_for_heat;
+    int16_t time_new_for_drain;
 
     int16_t Start_delta;
     _climate_operation_t Last_operation;
@@ -72,12 +74,12 @@ public:
     /// @brief Система охлаждения
     /// @param work_time Время работы охладителя (мин)
     /// @param pause_time Время паузы охладителя (мин)
-    void cool_down(uint16_t work_time, uint16_t pause_time);
+    void cool_down(int16_t work_time, int16_t pause_time);
 
     /// @brief Система подогрева
     /// @param work_time Время работы нагревателя (мин)
     /// @param pause_time Время паузы нагревателя (мин)
-    void warm_up(uint16_t work_time, uint16_t pause_time);
+    void warm_up(int16_t work_time, int16_t pause_time);
 
     //Система увлажнения
     void humidify();
@@ -85,7 +87,7 @@ public:
     /// @brief Система охлаждения
     /// @param work_time Время работы охладителя (мин)
     /// @param pause_time Время работы нагревателя (мин)
-    void drain(uint16_t freeze_time, uint16_t defrost_time);
+    void drain(int16_t freeze_time, int16_t defrost_time);
 
     /// @brief Система внутренней циркуляции воздуха
     void mix();

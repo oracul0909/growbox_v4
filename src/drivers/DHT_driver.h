@@ -29,7 +29,8 @@ private:
 
     void crcCheck();
     void reInit();
-
+    int32_t Temperature;
+    int32_t HUM;
 
 
 public:
@@ -60,6 +61,9 @@ public:
 
     //Возвращает значение влажности датчика DHT (адрес значения не имеет)
     int16_t get_humidity(int addr);
+
+    
+    int16_t get_humidity_middle();
 };
 
 #endif

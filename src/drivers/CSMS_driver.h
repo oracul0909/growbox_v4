@@ -7,7 +7,7 @@ class CSMS_driver
 {
 private:
     uint8_t pin;
-
+    uint8_t mois;
 
 public:
     CSMS_driver(uint8_t _pin)

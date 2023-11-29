@@ -37,14 +37,14 @@ void service_day_phase()
 
 void service_sensors_run()
 {
-    data[temp_inside] = DS.get_temperature();
-    data[temp_outside] = DHT_outside.get_temperature();
-    data[hum_inside] = DS.get_humidity();
-    data[hum_outside] = DHT_outside.get_humidity();
+    data[temp_inside] = DS.get_temperature_middle();
+    data[temp_outside] = DHT_outside.get_temperature_middle();
+    data[hum_inside] = DS.get_humidity_middle();
+    data[hum_outside] = DHT_outside.get_humidity_middle();
     data[ground_hum] = CSMS.get_moisture_middle(5);
     data[water_tank_status] = Tank.get_state();
     data[lock_status] = Lock.get_state();
-    InternalData[_enum_Temp_inside_top_temp] = DHT_inside.get_temperature();
+    InternalData[_enum_Temp_inside_top_temp] = DHT_inside.get_temperature_middle();
 
 
 }
@@ -77,12 +77,12 @@ void service_climate_control()
 {
     if (data[temp_inside] > (data[temp_required]))
     {
-        Climate.cool_down(5, 5);
+        Climate.cool_down(5, 3);
     }
     else
     if (data[temp_inside] < (data[temp_required]))
     {
-        Climate.warm_up(3, 3);
+        Climate.warm_up(5, 3);
     }
     else
     {
@@ -268,6 +268,6 @@ void TimeToReset()
 {
     static int16_t last_time;
         if((last_time>60) && data[time]==0)
-           service_wdt(); 
+           WDT_AUTORESET(); 
     last_time = data[time];
 }

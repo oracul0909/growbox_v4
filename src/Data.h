@@ -136,6 +136,11 @@ enum
     CO2_day,
     CO2_night,
 
+
+    //Статусы нагревателей охладителей
+    cooler_time_to_change,
+    heater_time_to_change,
+
     //Контрольная сумма данных (Индикатор правильных полей)
     _crc,
     _EEprom_save,

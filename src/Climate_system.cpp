@@ -4,12 +4,13 @@
 extern int16_t data[array_length];
 extern int16_t InternalData[_enum_dat_internal_count+1];
 
-void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
+void Climate_system::cool_down(int16_t work_time, int16_t pause_time)
 {
     if(Last_operation!= cooling)
     {
         Start_delta = abs(data[temp_inside] - data[temp_outside]);
         force_operation = None;
+        time_new_for_cool = data[time];
     }
     Last_operation = cooling;
     if(Start_delta < abs(abs(data[temp_inside] - data[temp_outside])- Climate_delta_coeff)) //Если он греется сам по себе
@@ -17,20 +18,27 @@ void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
         force_operation = cooling;
     }
 
-    if (time_new <= data[time])
+    if (time_new_for_cool <= data[time])
     {
         timer_flag = !timer_flag;
+        if(timer_flag)
+        {
+            time_new_for_cool = data[time] + work_time;
+        }
+        else
+        {
+            time_new_for_cool = data[time] + pause_time;
+        }
+        data[cooler_time_to_change] = time_new_for_cool;
     }
-    if ((data[temp_inside] <= (data[temp_outside]+1)) || force_operation == cooling)
+    if ((data[temp_inside] <= (data[temp_outside]+3)) || force_operation == cooling)
     {
         if (timer_flag == true)
         {
-            time_new = data[time] + work_time;
             mask = (Cooler_mask | Fan_inside_mask);
         }
         else if (timer_flag == false)
         {
-            time_new = data[time] + pause_time;
             mask = Fan_inside_mask;
         }
     }
@@ -41,11 +49,12 @@ void Climate_system::cool_down(uint16_t work_time, uint16_t pause_time)
     }
 }
 
-void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
+void Climate_system::warm_up(int16_t work_time, int16_t pause_time)
 {
     if(Last_operation!= heating)
     {
         Start_delta = abs(data[temp_outside] - data[temp_inside]);
+        time_new_for_heat = data[time];
         force_operation = None;
     }
     Last_operation = heating;
@@ -55,21 +64,30 @@ void Climate_system::warm_up(uint16_t work_time, uint16_t pause_time)
         force_operation = heating;
     }
 
-    if (time_new <= data[time])
+    if (time_new_for_heat <= data[time])
     {
         timer_flag = !timer_flag;
+        if(timer_flag)
+        {
+            time_new_for_heat = data[time] + work_time;
+        }
+        else
+        {
+            time_new_for_heat = data[time] + pause_time;
+        }
+        data[heater_time_to_change] = time_new_for_heat;
     }
-    if ((data[temp_inside] >= (data[temp_outside]-1)) || force_operation == heating)
+    if ((data[temp_inside] >= (data[temp_outside]-3)) || force_operation == heating)
     {
         if (timer_flag == true)
         {
-            time_new = data[time] + work_time;
+            
             if((InternalData[_enum_Temp_inside_top_temp]<55) && (data[temp_inside]<55))
             mask = (Heater_mask | Fan_inside_mask);
         }
         else if (timer_flag == false)
         {
-            time_new = data[time] + pause_time;
+
             mask = Fan_inside_mask;
         }
     }
@@ -93,11 +111,11 @@ void Climate_system::humidify()
     Last_operation = None;
 }
 
-void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
+void Climate_system::drain(int16_t freeze_time, int16_t defrost_time)
 {
-    if (time_new <= data[time])
+    if (time_new_for_drain <= data[time])
     {
-        timer_flag = !timer_flag;
+      //  timer_flag = !timer_flag;
     }
     if (data[hum_inside] <= data[hum_outside])
     {
@@ -121,6 +139,7 @@ void Climate_system::drain(uint16_t freeze_time, uint16_t defrost_time)
 
 void Climate_system::mix()
 {
+    /*
     if (time_new <= data[time])
     {
         timer_flag = !timer_flag;
@@ -137,6 +156,7 @@ void Climate_system::mix()
     }
     force_operation = None;
     Last_operation = None;
+    */
 }
 
 void Climate_system::stop()
